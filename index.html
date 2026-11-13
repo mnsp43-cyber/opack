@@ -98,11 +98,22 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
 .nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:6px}
 .hdr .btn{display:none;min-height:42px;padding:.55em 1.1em;font-size:.92rem}
 .burger{width:48px;height:48px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:#dde4ed;margin-right:-10px}
-.burger span{display:block;width:24px;height:2.5px;background:currentColor;border-radius:2px;box-shadow:0 7px 0 currentColor,0 -7px 0 currentColor}
+.burger span{position:relative;display:block;width:24px;height:2.5px;background:currentColor;border-radius:2px;transition:background-color .2s ease .1s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:24px;height:2.5px;background:currentColor;border-radius:2px;transition:transform .35s cubic-bezier(.7,0,.2,1)}
+.burger span::before{transform:translateY(-7px)}
+.burger span::after{transform:translateY(7px)}
+.burger[aria-expanded="true"] span{background:transparent;transition-delay:0s}
+.burger[aria-expanded="true"] span::before{transform:rotate(45deg)}
+.burger[aria-expanded="true"] span::after{transform:rotate(-45deg)}
 @media (min-width:960px){.nav,.hdr .btn{display:flex}.burger{display:none}.hdr-logo{width:118px}}
 
-.menu{position:fixed;inset:0;z-index:60;background:var(--azul-escuro);color:#dde4ed;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 12px) 20px calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateY(-100%);transition:transform .45s cubic-bezier(.7,0,.2,1);visibility:hidden}
-.menu.open{transform:none;visibility:visible}
+.menu{position:fixed;inset:0;z-index:45;background:var(--azul-escuro);color:#dde4ed;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px)) 24px calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(100%);transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s linear .5s;visibility:hidden}
+.menu.open{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s}
+.menu-top{visibility:hidden}
+.hdr-logo{transition:opacity .3s ease,transform .3s ease}
+body.menu-open .hdr .hdr-logo{opacity:0;transform:translateX(-8px);pointer-events:none}
+body.menu-open .hdr{background:transparent}
+body.menu-open::before{background:var(--azul-escuro)}
 .menu-top{display:flex;justify-content:space-between;align-items:center;height:var(--header-h)}
 .menu-x{width:48px;height:48px;border:0;background:transparent;color:#dde4ed;font-size:2rem;line-height:1;cursor:pointer;margin-right:-10px}
 .menu nav{display:flex;flex-direction:column;gap:8px;margin-top:24px}
@@ -131,7 +142,7 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
 .sign .btn:hover{background:#dde4ed}
 .sign .pk-sign{position:relative;z-index:3;display:block;width:min(250px,62vw);margin-top:-24px;transform-origin:50% 100%}
 .sign .pk-sign svg{display:block;width:100%;height:auto}
-.sign .pk-sign svg[data-pk]{clip-path:inset(24px 0 0 0)}
+.sign .pk-sign svg[data-pk]{clip-path:inset(24px -50% -50% -50%)}
 .sign .pk-sign .pk-fingers{position:absolute;inset:0;pointer-events:none}
 .sign .btn:hover + .pk-sign{animation:hop .5s ease}
 @keyframes hop{40%{transform:translateY(-8px)}}
@@ -187,11 +198,12 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
   .steps{order:1;padding-block:12svh}
   .step{min-height:64svh}
 }
-.seis{position:relative;text-align:center;padding-inline:clamp(48px,10vw,140px);margin-top:var(--gap-block);overflow:hidden;padding-block:16px}
+.seis{position:relative;text-align:center;padding-inline:0;margin-top:var(--gap-block);overflow:hidden;padding-block:16px}
 .seis .lede{margin:var(--gap-text) auto 0;max-width:24em}
 .seal{position:absolute;width:clamp(96px,14vw,170px);color:var(--azul-escuro);pointer-events:none}
 .seal svg{width:100%;height:auto;display:block;transform:rotate(calc(var(--scroll,0) * .12deg))}
-.seis .seal{right:calc(clamp(110px,14vw,170px) * -0.45);top:50%;margin-top:calc(clamp(110px,14vw,170px) * -0.5)}
+.seis .seal{position:relative;width:72px;margin:0 auto 16px}
+@media (min-width:1200px){.seis{padding-inline:140px}.seis .seal{position:absolute;right:0;top:50%;width:120px;margin:-60px 0 0}}
 
 /* Faixa de impacto */
 .impacto{padding:0 16px 16px;background:var(--paper)}
@@ -326,8 +338,8 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
 .ft-links a{text-decoration:none;padding-block:4px}
 .ft-links a:hover{opacity:1;text-decoration:underline}
 .ft-legal{margin-top:0;display:grid;gap:8px;font-weight:300;font-size:.92rem}
-.ft-pk{position:relative;width:min(280px,64vw);margin:24px 0 0 auto;display:block}
-@media (min-width:860px){.ft-pk{position:absolute;right:32px;bottom:0;width:280px;margin:0}}
+.ft-pk{position:relative;width:min(280px,64vw);margin:24px 24px 0 auto;display:block}
+@media (min-width:860px){.ft-pk{position:absolute;right:48px;bottom:0;width:280px;margin:0}}
 .ft-pk svg{display:block;width:100%;height:auto}
 .ft-space{height:0}
 @media (min-width:860px){.ft-space{height:224px}}
@@ -352,6 +364,7 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
 .gate .msg{min-height:1.5em;margin-top:16px}
 
 /* Personagens vivos */
+svg[data-pk],svg.pk-fingers{overflow:visible}
 [data-pk] .pk-eyes,[data-pk] .pk-face,[data-pk] .pk-brows,[data-pk] .pk-arm,[data-pk] .pk-leg,[data-pk] .pk-body{transform-box:fill-box}
 [data-pk] .pk-eyes{transform-origin:50% 55%}
 [data-pk] .pk-leg{transform-origin:50% 0}
@@ -433,7 +446,7 @@ svg[data-pk].walking .pk-leg.r{animation:pkLegB .42s ease-in-out infinite altern
 <div class="menu" id="menu" aria-hidden="true">
   <div class="menu-top">
     <span class="hdr-logo"><svg viewBox="0 0 1871 631" fill="currentColor" aria-hidden="true"><use href="#logo"/></svg></span>
-    <button class="menu-x" id="menu-x" type="button" aria-label="Fechar menu">&times;</button>
+    
   </div>
   <nav aria-label="Menu">
     <a href="#o-que-e">O que é O Pack</a>
@@ -512,9 +525,10 @@ svg[data-pk].walking .pk-leg.r{animation:pkLegB .42s ease-in-out infinite altern
         </div>
       </div>
       <div class="seis">
+        <div class="seal" aria-hidden="true"><svg data-pk="face" data-norot viewBox="0 0 116.97 116.97"><path fill="#103375" d="M58.48,0l4.13,5.9c1.71,2.44,5.12,2.96,7.47,1.13l5.68-4.41,2.22,6.87c.92,2.84,4.02,4.33,6.81,3.28l6.73-2.54.1,7.23c.04,2.98,2.56,5.31,5.53,5.13l7.18-.44-2.03,6.94c-.83,2.85.88,5.83,3.77,6.53l7,1.71-3.98,6.04c-1.64,2.48-.87,5.82,1.68,7.35l6.19,3.7-5.58,4.59c-2.29,1.89-2.55,5.31-.56,7.52l4.83,5.37-6.67,2.74c-2.75,1.13-4,4.32-2.75,7.02l3.04,6.56-7.17.64c-2.96.27-5.1,2.95-4.7,5.9l.97,7.17-7.03-1.5c-2.91-.62-5.75,1.31-6.24,4.25l-1.17,7.13-6.27-3.51c-2.6-1.46-5.89-.44-7.22,2.23l-3.21,6.45-4.96-5.21c-2.06-2.16-5.5-2.16-7.56,0l-4.96,5.21-3.21-6.45c-1.33-2.67-4.62-3.68-7.22-2.23l-6.27,3.51-1.17-7.13c-.48-2.94-3.33-4.88-6.24-4.25l-7.03,1.5.97-7.17c.4-2.95-1.74-5.63-4.7-5.9l-7.17-.64,3.04-6.56c1.25-2.7,0-5.89-2.75-7.02l-6.67-2.74,4.83-5.37c1.99-2.21,1.73-5.63-.56-7.52l-5.58-4.59,6.19-3.7c2.55-1.53,3.31-4.87,1.68-7.35l-3.98-6.04,7-1.71c2.89-.7,4.61-3.68,3.77-6.53l-2.03-6.94,7.18.44c2.97.18,5.49-2.16,5.53-5.13l.1-7.23,6.73,2.54c2.79,1.05,5.89-.44,6.81-3.28l2.22-6.87,5.68,4.41c2.35,1.83,5.76,1.32,7.47-1.13l4.13-5.9Z"/> <g> <g> <path fill="#dde4ed" d="M42.11,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM42.11,49.69c-4.63,0-8.4,3.77-8.4,8.4s3.77,8.4,8.4,8.4,8.39-3.77,8.39-8.4-3.77-8.4-8.39-8.4Z"/> <path fill="#dde4ed" d="M28.21,41.45c-1.17,0-2.31-.63-2.9-1.73-.87-1.6-.28-3.61,1.33-4.48l15.13-8.21c1.6-.87,3.61-.28,4.48,1.33.87,1.6.28,3.61-1.33,4.48l-15.13,8.21c-.5.27-1.04.4-1.57.4Z"/> </g> <g> <path fill="#dde4ed" d="M74.86,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM74.86,49.69c-4.63,0-8.39,3.77-8.39,8.4s3.77,8.4,8.39,8.4,8.4-3.77,8.4-8.4-3.77-8.4-8.4-8.4Z"/> <path fill="#dde4ed" d="M88.76,41.45c-.53,0-1.07-.13-1.57-.4l-15.13-8.21c-1.6-.87-2.2-2.87-1.33-4.48s2.87-2.2,4.48-1.33l15.13,8.21c1.6.87,2.2,2.87,1.33,4.48-.6,1.1-1.73,1.73-2.9,1.73Z"/> </g> </g></svg></div>
         <h3 class="t t-m rvt"><span class="hi"><span class="count" data-to="6">6</span> rótulos</span><span class="lo">para descobrir, 1 guia para acompanhar e alguns brindes pelo caminho.</span></h3>
         <p class="lede rv">Uma seleção para experimentar e conhecer novas histórias, sem precisar entender tudo de cerveja para aproveitar o caminho.</p>
-        <div class="seal" aria-hidden="true"><svg data-pk="face" data-norot viewBox="0 0 116.97 116.97"><path fill="#103375" d="M58.48,0l4.13,5.9c1.71,2.44,5.12,2.96,7.47,1.13l5.68-4.41,2.22,6.87c.92,2.84,4.02,4.33,6.81,3.28l6.73-2.54.1,7.23c.04,2.98,2.56,5.31,5.53,5.13l7.18-.44-2.03,6.94c-.83,2.85.88,5.83,3.77,6.53l7,1.71-3.98,6.04c-1.64,2.48-.87,5.82,1.68,7.35l6.19,3.7-5.58,4.59c-2.29,1.89-2.55,5.31-.56,7.52l4.83,5.37-6.67,2.74c-2.75,1.13-4,4.32-2.75,7.02l3.04,6.56-7.17.64c-2.96.27-5.1,2.95-4.7,5.9l.97,7.17-7.03-1.5c-2.91-.62-5.75,1.31-6.24,4.25l-1.17,7.13-6.27-3.51c-2.6-1.46-5.89-.44-7.22,2.23l-3.21,6.45-4.96-5.21c-2.06-2.16-5.5-2.16-7.56,0l-4.96,5.21-3.21-6.45c-1.33-2.67-4.62-3.68-7.22-2.23l-6.27,3.51-1.17-7.13c-.48-2.94-3.33-4.88-6.24-4.25l-7.03,1.5.97-7.17c.4-2.95-1.74-5.63-4.7-5.9l-7.17-.64,3.04-6.56c1.25-2.7,0-5.89-2.75-7.02l-6.67-2.74,4.83-5.37c1.99-2.21,1.73-5.63-.56-7.52l-5.58-4.59,6.19-3.7c2.55-1.53,3.31-4.87,1.68-7.35l-3.98-6.04,7-1.71c2.89-.7,4.61-3.68,3.77-6.53l-2.03-6.94,7.18.44c2.97.18,5.49-2.16,5.53-5.13l.1-7.23,6.73,2.54c2.79,1.05,5.89-.44,6.81-3.28l2.22-6.87,5.68,4.41c2.35,1.83,5.76,1.32,7.47-1.13l4.13-5.9Z"/> <g> <g> <path fill="#dde4ed" d="M42.11,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM42.11,49.69c-4.63,0-8.4,3.77-8.4,8.4s3.77,8.4,8.4,8.4,8.39-3.77,8.39-8.4-3.77-8.4-8.39-8.4Z"/> <path fill="#dde4ed" d="M28.21,41.45c-1.17,0-2.31-.63-2.9-1.73-.87-1.6-.28-3.61,1.33-4.48l15.13-8.21c1.6-.87,3.61-.28,4.48,1.33.87,1.6.28,3.61-1.33,4.48l-15.13,8.21c-.5.27-1.04.4-1.57.4Z"/> </g> <g> <path fill="#dde4ed" d="M74.86,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM74.86,49.69c-4.63,0-8.39,3.77-8.39,8.4s3.77,8.4,8.39,8.4,8.4-3.77,8.4-8.4-3.77-8.4-8.4-8.4Z"/> <path fill="#dde4ed" d="M88.76,41.45c-.53,0-1.07-.13-1.57-.4l-15.13-8.21c-1.6-.87-2.2-2.87-1.33-4.48s2.87-2.2,4.48-1.33l15.13,8.21c1.6.87,2.2,2.87,1.33,4.48-.6,1.1-1.73,1.73-2.9,1.73Z"/> </g> </g></svg></div>
+        
       </div>
     </div>
   </section>
@@ -685,11 +699,11 @@ svg[data-pk].walking .pk-leg.r{animation:pkLegB .42s ease-in-out infinite altern
   var menu = document.getElementById('menu'), burger = document.getElementById('burger');
   function setMenu(open){
     menu.classList.toggle('open', open); menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false'); body.style.overflow = open ? 'hidden' : '';
-    if (open) document.getElementById('menu-x').focus(); else burger.focus();
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false'); burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    body.classList.toggle('menu-open', open); body.style.overflow = open ? 'hidden' : '';
+    if (!open) burger.focus();
   }
-  burger.addEventListener('click', function(){ setMenu(true); });
-  document.getElementById('menu-x').addEventListener('click', function(){ setMenu(false); });
+  burger.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
   menu.querySelectorAll('nav a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
 
@@ -975,12 +989,12 @@ svg[data-pk].walking .pk-leg.r{animation:pkLegB .42s ease-in-out infinite altern
         var r = box.getBoundingClientRect(), base = r.left - x, pr = cont.parentNode.getBoundingClientRect(), left = pr.left;
         var prev = cont.previousElementSibling;
         if (prev){ var q = prev.getBoundingClientRect(); if (q.bottom > r.top + 10 && q.top < r.bottom - 10) left = q.right + 8; }
-        if (cont.parentNode.classList.contains('menu')) left = pr.left + 20;
+        if (cont.parentNode.classList.contains('menu')) left = pr.left + 40;
         return Math.max(0, base - left);
       }
       function step(){
         if (!m.visible || document.hidden){ setTimeout(step, 1500); return; }
-        var R = range(); if (R < 24){ setTimeout(step, 4000); return; }
+        var R = Math.max(0, range() - 16); if (R < 24){ setTimeout(step, 4000); return; }
         var target = -rnd(0, R); if (Math.abs(target - x) < Math.min(60, R * .3)) target = x < -R / 2 ? 0 : -R;
         var dur = Math.abs(target - x) / 42 * 1000;
         svg.classList.add('walking');
