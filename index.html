@@ -51,7 +51,7 @@
 @media (min-width:768px){:root{--sec-y:80px;--gap-block:48px;--gap-text:24px}}
 @media (min-width:1200px){:root{--sec-y:96px;--gap-block:64px}}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--header-h))}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--header-h))}
 body{margin:0;background:var(--navy);color:var(--ink);font-family:var(--font);font-weight:350;font-stretch:100%;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 html,body{overflow-x:clip}
 img{max-width:100%;display:block}
@@ -396,8 +396,8 @@ body.menu-open::before{background:var(--azul-escuro)}
 .ft-links{display:grid;grid-template-columns:1fr;gap:0;font-weight:300}
 .ft-links a{text-decoration:none;padding-block:4px}
 .ft-links a:hover{opacity:1;text-decoration:underline}
-.ft-legal{margin-top:0;display:grid;gap:8px;font-weight:300;justify-items:start}
-.ft-pop{background:none;border:0;padding:4px 0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.ft-legal{margin-top:0;display:grid;gap:0;font-weight:300;justify-items:start}
+.ft-pop{-webkit-appearance:none;appearance:none;background:none;border:0;border-radius:0;padding:4px 0;margin:0;font:inherit;font-family:inherit;font-size:1rem;font-weight:300;font-stretch:inherit;line-height:1.5;letter-spacing:inherit;color:inherit;text-align:left;cursor:pointer;-webkit-text-size-adjust:100%}
 .ft-pop:hover{text-decoration:underline;text-underline-offset:4px}
 /* Pop-up do institucional */
 .modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;padding-top:calc(env(safe-area-inset-top,0px) + 16px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
