@@ -138,9 +138,11 @@ body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
 .burger[aria-expanded="true"] span::after{transform:rotate(-45deg)}
 @media (min-width:960px){.nav,.hdr .btn{display:flex}.burger{display:none}.hdr-logo{width:118px}}
 
-.menu{position:fixed;inset:0;z-index:45;background:var(--azul-escuro);color:#dde4ed;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px)) 24px calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(100%);transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s linear .5s;visibility:hidden}
-.menu.open{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s}
+.menu{position:fixed;inset:0;z-index:45;background:var(--azul-escuro);color:#dde4ed;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px)) 24px calc(env(safe-area-inset-bottom,0px) + 24px);transform:translate3d(100%,0,0);-webkit-transform:translate3d(100%,0,0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;overscroll-behavior:contain;transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s linear .5s;visibility:hidden}
+.menu.open{transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);visibility:visible;transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s}
 .menu-top{visibility:hidden}
+body.menu-open main *,body.menu-open footer *{animation-play-state:paused!important}
+body.menu-open.menu-shown main,body.menu-open.menu-shown footer{visibility:hidden}
 .hdr-logo{transition:opacity .3s ease,transform .3s ease}
 body.menu-open .hdr .hdr-logo{opacity:0;transform:translateX(-8px);pointer-events:none}
 body.menu-open .hdr{background:transparent}
@@ -977,6 +979,7 @@ svg[data-pk].walking{animation:none}
     menu.classList.toggle('open', open); menu.setAttribute('aria-hidden', open ? 'false' : 'true');
     burger.setAttribute('aria-expanded', open ? 'true' : 'false'); burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     body.classList.toggle('menu-open', open); body.style.overflow = open ? 'hidden' : '';
+    clearTimeout(menu._t); if (open) { menu._t = setTimeout(function(){ body.classList.add('menu-shown'); }, 520); } else { body.classList.remove('menu-shown'); }
     if (!open) burger.focus();
   }
   burger.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
