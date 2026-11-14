@@ -262,6 +262,11 @@ body.menu-open::before{background:var(--azul-escuro)}
 .mags-note{text-align:center;font-size:.85rem;color:var(--ink-soft);margin-top:24px}
 @media (min-width:768px){.mags{gap:40px}}
 .rev .lede{margin:var(--gap-block) auto 0;text-align:center}
+.rev .lede strong{font-weight:700}
+.rev .lede .rev-intro{margin:24px 0 0}
+.rev-tags{list-style:none;margin:16px auto 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:30em}
+.rev-tags li{border:1.5px solid #6c8ebf;border-radius:999px;padding:8px 16px;font-weight:600;font-size:1rem;line-height:1.3;color:var(--azul-escuro);text-align:center}
+.rev-close{margin:24px auto 0;text-align:center;font-weight:300;font-size:.95rem;color:var(--ink-soft);max-width:30em}
 
 /* Assinaturas */
 .ass-grid{display:grid;gap:var(--gap-block)}
@@ -596,9 +601,16 @@ svg[data-pk].walking{animation:none}
         </div>
       </div>
       <div class="lede rv">
-        <p>A revista Antes do Primeiro Gole acompanha cada edição para aproximar você das cervejas que chegaram no seu Pack.</p>
-        <p>Por suas páginas, você conhece os rótulos, as cervejarias e as histórias por trás de cada escolha. E ainda descobre curiosidades para aproveitar tudo sem complicação, sem precisar ser especialista.</p>
+        <p>A revista <strong>Antes do Primeiro Gole</strong> acompanha cada edição para aproximar você das cervejas que chegaram no seu Pack.</p>
+        <p class="rev-intro">Por suas páginas, você conhece:</p>
       </div>
+      <ul class="rev-tags" data-stagger>
+        <li>Os rótulos</li>
+        <li>As cervejarias</li>
+        <li>As histórias por trás de cada escolha</li>
+        <li>Curiosidades</li>
+      </ul>
+      <p class="rev-close rv">Sem complicação, sem precisar ser especialista.</p>
     </div>
   </section>
 
