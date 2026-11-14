@@ -1255,6 +1255,11 @@ svg[data-pk].walking{animation:none}
     window.addEventListener('pointermove', go, {passive:true}); window.addEventListener('pointerdown', go, {passive:true});
   })();
 
+  /* Botões dos planos: sem link de compra ainda, então não rolam a página */
+  document.querySelectorAll('.plan-body .btn').forEach(function(b){
+    b.addEventListener('click', function(e){ if ((b.getAttribute('href') || '').charAt(0) === '#') e.preventDefault(); });
+  });
+
   /* 5. Chuva de tampinhas ao assinar */
   (function(){
     if (reduce || !Element.prototype.animate) return;
