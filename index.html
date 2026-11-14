@@ -1467,7 +1467,7 @@ svg[data-pk].walking{animation:none}
         var r = box.getBoundingClientRect(), base = r.left - x, pr = cont.parentNode.getBoundingClientRect(), left = pr.left;
         var prev = cont.previousElementSibling;
         if (prev){ var q = prev.getBoundingClientRect(); if (q.bottom > r.top + 10 && q.top < r.bottom - 10) left = q.right + 8; }
-        if (cont.parentNode.classList.contains('menu')) left = pr.left + 40;
+        var mn = box.closest('.menu'); if (mn) left = mn.getBoundingClientRect().left + 24;
         return Math.max(0, base - left);
       }
       /* Caminhada orgânica: vira para o lado, inclina, passos alternados, quique e balanço dos braços */
