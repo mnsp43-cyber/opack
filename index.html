@@ -990,6 +990,15 @@ svg[data-pk].walking{animation:none}
 
   document.addEventListener('touchstart', function(){}, {passive:true});
 
+  /* Emendas entre seções: cada bloco estende 1px da própria cor para baixo e para cima,
+     cobrindo a fresta de subpixel que o Safari deixa entre seções vizinhas */
+  [].forEach.call(document.querySelectorAll('main > section, main > .cover-pair > section, footer > section, footer > .mod'), function(el){
+    var cs = getComputedStyle(el), bg = cs.backgroundColor;
+    if (!bg || bg === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(bg)) return;
+    var sh = cs.boxShadow && cs.boxShadow !== 'none' ? cs.boxShadow + ', ' : '';
+    el.style.boxShadow = sh + '0 1px 0 0 ' + bg + ', 0 -1px 0 0 ' + bg;
+  });
+
   /* Gate de idade */
   var gate = document.getElementById('gate'), ok = false;
   /* "Sim" vale por 30 dias neste aparelho; "Ainda não" vale até fechar o navegador */
@@ -1462,7 +1471,7 @@ svg[data-pk].walking{animation:none}
       var svg = m.svg, box = document.createElement('span'); box.className = 'pk-walk';
       var flip = document.createElement('span'); flip.className = 'pk-flip';
       svg.parentNode.insertBefore(box, svg); box.appendChild(flip); flip.appendChild(svg);
-      var x = 0, cont = box.parentNode;
+      var x = 0, cont = box.closest('.pk') || box.parentNode;
       function range(){
         var r = box.getBoundingClientRect(), base = r.left - x, pr = cont.parentNode.getBoundingClientRect(), left = pr.left;
         var prev = cont.previousElementSibling;
