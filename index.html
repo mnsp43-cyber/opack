@@ -387,7 +387,29 @@ body.menu-open::before{background:var(--azul-escuro)}
 .ft-links{display:grid;grid-template-columns:1fr;gap:0;font-weight:300}
 .ft-links a{text-decoration:none;padding-block:4px}
 .ft-links a:hover{opacity:1;text-decoration:underline}
-.ft-legal{margin-top:0;display:grid;gap:8px;font-weight:300;font-size:.92rem}
+.ft-legal{margin-top:0;display:grid;gap:8px;font-weight:300;font-size:.92rem;justify-items:start}
+.ft-pop{background:none;border:0;padding:4px 0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.ft-pop:hover{text-decoration:underline;text-underline-offset:4px}
+/* Pop-up do institucional */
+.modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;padding-top:calc(env(safe-area-inset-top,0px) + 16px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+.modal[hidden]{display:none}
+.modal-bg{position:absolute;inset:0;background:rgba(16,51,117,.72)}
+.modal-box{position:relative;width:min(640px,100%);max-height:min(82svh,760px);display:flex;flex-direction:column;background:#dde4ed;color:#103375;border-radius:24px;padding:32px 24px 24px;box-shadow:0 30px 60px -20px rgba(16,51,117,.6)}
+.modal.open .modal-box{animation:modalIn .4s cubic-bezier(.22,.61,.36,1) both}
+.modal.open .modal-bg{animation:fadein .3s ease both}
+@keyframes fadein{from{opacity:0}}
+@keyframes modalIn{from{opacity:0;transform:translate3d(0,24px,0) scale(.98)}}
+.modal h2{margin:0 56px 16px 0;font-weight:900;font-stretch:120%;color:var(--laranja);font-size:clamp(1.4rem,5vw,2rem);line-height:1.05}
+.modal-body{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:12px;margin-right:-8px;font-weight:350;line-height:1.55;scrollbar-width:thin;scrollbar-color:#6c8ebf transparent}
+.modal-body::-webkit-scrollbar{width:6px}.modal-body::-webkit-scrollbar-thumb{background:#6c8ebf;border-radius:3px}
+.modal-body::after{content:"";position:sticky;bottom:-1px;display:block;height:40px;margin-top:-28px;background:linear-gradient(rgba(221,228,237,0),#dde4ed);pointer-events:none}
+.modal-body p{margin:0 0 12px}
+.modal-body h3{margin:24px 0 8px;font-weight:800;font-stretch:110%;font-size:1.05rem}
+.modal-body ul{margin:0 0 12px;padding-left:20px}.modal-body li{margin:0 0 6px}
+.modal-body li::marker{color:var(--laranja)}
+.modal-x{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#103375;color:#dde4ed;display:grid;place-items:center;cursor:pointer}
+.modal-x:hover{background:var(--laranja);color:#103375}
+@media (min-width:768px){.modal-box{padding:40px 40px 32px}}
 .ft-pk{position:relative;width:min(280px,64vw);margin:24px 24px 0 auto;display:block}
 @media (min-width:860px){.ft-pk{position:absolute;right:48px;bottom:calc(var(--radius-sec) + 8px);width:280px;margin:0}}
 .ft-pk svg{display:block;width:100%;height:auto}
@@ -729,7 +751,7 @@ svg[data-pk].walking{animation:none}
         </nav>
         <h3 class="ft-h" style="margin-top:24px">Institucional</h3>
         <div class="ft-legal" data-stagger>
-          <span>Sobre O Pack</span><span>Política de Privacidade</span><span>Termos de Uso</span><span>Política de Entrega</span><span>Política de Cancelamento</span>
+          <button type="button" class="ft-pop" data-modal="sobre">Sobre O Pack</button><button type="button" class="ft-pop" data-modal="privacidade">Política de Privacidade</button><button type="button" class="ft-pop" data-modal="termos">Termos de Uso</button><button type="button" class="ft-pop" data-modal="entrega">Política de Entrega</button><button type="button" class="ft-pop" data-modal="cancelamento">Política de Cancelamento</button>
         </div>
       </div>
     </div>
@@ -755,6 +777,89 @@ svg[data-pk].walking{animation:none}
     <span>©2026 O Pack. Todos os direitos reservados.</span>
   </div>
 </footer>
+
+<template id="tpl-sobre" data-title="Sobre O Pack">
+<p><b class="brand">O Pack</b> é uma assinatura que reúne uma seleção de cervejas Pilsen artesanais produzidas no estado de São Paulo. A cada edição, diferentes rótulos são escolhidos para aproximar você de novas cervejas e de quem está por trás delas.</p>
+<p>A gente nasceu de uma ideia simples: descobrir São Paulo através da cerveja. O estado reúne centenas de cervejarias e milhares de rótulos, mas nem sempre é fácil saber por onde começar. Por isso, a gente faz a curadoria, conta as histórias e entrega tudo na sua casa.</p>
+<h3>Missão</h3>
+<p>Aproximar o mercado cervejeiro do consumidor, conectando pessoas a cervejarias e novos rótulos por meio de curadoria, informação e experiências acessíveis.</p>
+<h3>Visão</h3>
+<p>Ser referência em curadoria de cervejas, valorizando cervejarias artesanais paulistas e tornando seus rótulos mais conhecidos, acessíveis e presentes na vida das pessoas.</p>
+<h3>Valores</h3>
+<ul><li><strong>Descoberta:</strong> experimentar novos rótulos amplia repertórios e cria boas histórias para compartilhar.</li><li><strong>Genuíno:</strong> a gente valoriza relações simples, acessíveis e verdadeiras.</li><li><strong>Autenticidade:</strong> respeitamos a identidade de cada cerveja, de cada produtor e de cada experiência.</li></ul>
+</template>
+<template id="tpl-privacidade" data-title="Política de Privacidade">
+<p>Esta política explica como <b class="brand">O Pack</b> coleta, usa e protege os seus dados pessoais, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).</p>
+<h3>Quem é o responsável pelos dados</h3>
+<p><span class="ph" style="white-space:normal">[Razão social]</span>, inscrita no CNPJ <span class="ph" style="white-space:normal">[00.000.000/0000-00]</span>, com sede em <span class="ph" style="white-space:normal">[endereço]</span>.</p>
+<h3>Quais dados a gente coleta</h3>
+<ul><li>Dados de cadastro: nome, e-mail, telefone, data de nascimento e CPF.</li><li>Dados de entrega: endereço completo.</li><li>Dados de pagamento, processados diretamente por <span class="ph" style="white-space:normal">[plataforma de pagamento]</span>. <b class="brand">O Pack</b> não armazena dados completos de cartão.</li><li>Dados de navegação, como páginas visitadas e cookies.</li></ul>
+<h3>Para que usamos</h3>
+<ul><li>Processar pedidos e assinaturas e fazer as entregas.</li><li>Confirmar que você tem 18 anos ou mais.</li><li>Falar com você sobre o seu pedido e responder dúvidas.</li><li>Enviar novidades, se você autorizar. Dá para cancelar quando quiser.</li><li>Melhorar o site e a experiência.</li></ul>
+<h3>Com quem compartilhamos</h3>
+<p>Só com quem precisa para o serviço funcionar: transportadoras, plataformas de pagamento e ferramentas de atendimento. A gente não vende os seus dados.</p>
+<h3>Cookies</h3>
+<p>O site usa cookies e armazenamento local para lembrar preferências, como a confirmação de idade, e entender como o site é usado. Você pode apagar ou bloquear os cookies nas configurações do seu navegador.</p>
+<h3>Seus direitos</h3>
+<p>Pela LGPD, você pode pedir a confirmação do tratamento, o acesso, a correção ou a exclusão dos seus dados, a portabilidade e a revogação do consentimento. É só escrever para <span class="ph" style="white-space:normal">[e-mail do encarregado de dados]</span>.</p>
+<h3>Por quanto tempo guardamos</h3>
+<p>Pelo tempo necessário para cumprir as finalidades acima e as obrigações legais, como as fiscais.</p>
+<h3>Atualizações</h3>
+<p>Esta política pode mudar. A versão mais recente fica sempre aqui. Última atualização: <span class="ph" style="white-space:normal">[data]</span>.</p>
+</template>
+<template id="tpl-termos" data-title="Termos de Uso">
+<p>Ao usar o site e os serviços do <b class="brand">O Pack</b>, você concorda com estes termos. Leia com atenção.</p>
+<h3>Maioridade</h3>
+<p><b class="brand">O Pack</b> vende bebidas alcoólicas e é destinado exclusivamente a maiores de 18 anos. É proibida a venda e a entrega de bebidas alcoólicas a menores de 18 anos. Ao comprar, você declara ter 18 anos ou mais.</p>
+<h3>Pedidos e assinaturas</h3>
+<p>Os pedidos estão sujeitos à disponibilidade dos rótulos e à confirmação do pagamento. A composição de cada edição pode variar conforme a curadoria e as cervejarias participantes.</p>
+<h3>Preços e pagamento</h3>
+<p>Os preços e as formas de pagamento são os informados no site no momento da compra. As condições de cobrança das assinaturas são: <span class="ph" style="white-space:normal">[a definir: cobrança mensal ou única, renovação automática]</span>.</p>
+<h3>Conteúdo e marca</h3>
+<p>Textos, imagens, a revista Antes do Primeiro Gole, o logotipo e o personagem Packinho pertencem ao <b class="brand">O Pack</b> ou aos seus parceiros. Não é permitido copiar ou usar esse conteúdo sem autorização.</p>
+<h3>Consumo responsável</h3>
+<p>Beba com moderação. Se for dirigir, não beba.</p>
+<h3>Responsabilidade</h3>
+<p><b class="brand">O Pack</b> faz a curadoria e a venda das cervejas. Os rótulos são produzidos pelas cervejarias parceiras, responsáveis pela fabricação de cada produto.</p>
+<h3>Foro</h3>
+<p>Fica eleito o foro da comarca de <span class="ph" style="white-space:normal">[cidade]</span>, SP, para resolver questões relacionadas a estes termos.</p>
+</template>
+<template id="tpl-entrega" data-title="Política de Entrega">
+<p>Depois que o pedido é confirmado, a gente prepara o seu Pack e envia para o endereço informado na compra.</p>
+<h3>Prazos</h3>
+<p>Os prazos e as condições variam conforme <span class="ph" style="white-space:normal">[região de entrega / CEP / modalidade de frete]</span>. O prazo estimado aparece antes de você finalizar o pedido.</p>
+<h3>Frete</h3>
+<p><span class="ph" style="white-space:normal">[Definir se o frete está incluso no valor do Pack ou se é calculado separadamente de acordo com o endereço de entrega.]</span></p>
+<h3>Assinaturas</h3>
+<p>Nas assinaturas de 3 e 6 meses, você recebe um Pack novo por mês. A data de envio de cada edição é <span class="ph" style="white-space:normal">[a definir]</span>.</p>
+<h3>Recebimento</h3>
+<p>Por se tratar de bebida alcoólica, a entrega só pode ser feita a uma pessoa maior de 18 anos, que pode ter que apresentar documento com foto.</p>
+<p>Confira se o endereço está completo e correto. Se não houver ninguém para receber, <span class="ph" style="white-space:normal">[definir número de tentativas e o que acontece depois]</span>.</p>
+<h3>Problemas na entrega</h3>
+<p>Se o Pack chegar avariado ou com algum item faltando, fale com a gente em até <span class="ph" style="white-space:normal">[X dias]</span> após o recebimento, com fotos, pelo <span class="ph" style="white-space:normal">[canal de atendimento]</span>.</p>
+<h3>Alteração de endereço</h3>
+<p><span class="ph" style="white-space:normal">[Definir se o endereço pode ser alterado após a contratação da assinatura e o prazo-limite para a alteração.]</span></p>
+</template>
+<template id="tpl-cancelamento" data-title="Política de Cancelamento">
+<p>A gente quer que a sua experiência seja simples também na hora de cancelar.</p>
+<h3>Direito de arrependimento</h3>
+<p>Pelo Código de Defesa do Consumidor (art. 49), compras feitas pela internet podem ser canceladas em até 7 dias a partir do recebimento, com devolução do valor pago. Para isso, fale com a gente pelo <span class="ph" style="white-space:normal">[canal de atendimento]</span>.</p>
+<h3>Pack do mês</h3>
+<p>Como é uma compra avulsa, vale o direito de arrependimento acima. <span class="ph" style="white-space:normal">[Definir condições de devolução do produto, por exemplo embalagem lacrada.]</span></p>
+<h3>Assinaturas de 3 e 6 meses</h3>
+<p><span class="ph" style="white-space:normal">[Definir política de cancelamento para as assinaturas de 3 e 6 meses.]</span></p>
+<ul><li>Prazo para pedir o cancelamento: <span class="ph" style="white-space:normal">[a definir]</span></li><li>Multa: <span class="ph" style="white-space:normal">[existência ou não de multa]</span></li><li>Edições ainda não enviadas: <span class="ph" style="white-space:normal">[possibilidade de reembolso]</span></li><li>Como pedir: <span class="ph" style="white-space:normal">[canal para solicitar o cancelamento]</span></li></ul>
+<h3>Reembolso</h3>
+<p>Quando houver reembolso, ele é feito pela mesma forma de pagamento usada na compra, em até <span class="ph" style="white-space:normal">[X dias úteis]</span>.</p>
+</template>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-t" hidden>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box">
+    <button class="modal-x" type="button" data-close aria-label="Fechar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2 id="modal-t"></h2>
+    <div class="modal-body" tabindex="0"></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1259,6 +1364,38 @@ svg[data-pk].walking{animation:none}
   document.querySelectorAll('.plan-body .btn').forEach(function(b){
     b.addEventListener('click', function(e){ if ((b.getAttribute('href') || '').charAt(0) === '#') e.preventDefault(); });
   });
+
+  /* Pop-up do institucional */
+  (function(){
+    var modal = document.getElementById('modal'); if (!modal) return;
+    var title = document.getElementById('modal-t'), body = modal.querySelector('.modal-body'), last = null;
+    function open(key, from){
+      var tp = document.getElementById('tpl-' + key); if (!tp) return;
+      last = from || null;
+      title.textContent = tp.getAttribute('data-title');
+      body.innerHTML = ''; body.appendChild(tp.content.cloneNode(true)); body.scrollTop = 0;
+      modal.hidden = false; modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-x').focus();
+    }
+    function close(){
+      modal.classList.remove('open'); modal.hidden = true;
+      document.body.style.overflow = '';
+      if (last) last.focus();
+    }
+    document.querySelectorAll('[data-modal]').forEach(function(b){ b.addEventListener('click', function(){ open(b.getAttribute('data-modal'), b); }); });
+    modal.querySelectorAll('[data-close]').forEach(function(x){ x.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){
+      if (modal.hidden) return;
+      if (e.key === 'Escape'){ close(); return; }
+      if (e.key === 'Tab'){
+        var f = [].slice.call(modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])')).filter(function(el){ return el.offsetParent !== null; });
+        if (!f.length) return; var a = f[0], z = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === a){ e.preventDefault(); z.focus(); }
+        else if (!e.shiftKey && document.activeElement === z){ e.preventDefault(); a.focus(); }
+      }
+    });
+  })();
 
   /* 5. Chuva de tampinhas ao assinar */
   (function(){
