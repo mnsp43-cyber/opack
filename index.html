@@ -332,6 +332,11 @@ body.menu-open::before{background:var(--azul-escuro)}
 @media (max-width:359px){.plan-body .btn{padding-inline:.8em}}
 @media (max-width:899px){.step{justify-content:center}}
 .roleta-ctrl{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:8px}
+.em-breve{margin:32px auto 0;max-width:22rem;text-align:center;font-size:1rem;line-height:1.5;font-weight:300;opacity:.9}
+.em-breve strong{font-weight:700}
+.em-breve a{display:inline-block;margin-top:8px;padding-block:4px;color:var(--laranja);font-weight:700;text-decoration:none}
+.em-breve a:hover span{display:inline-block;transform:translateX(4px)}
+.em-breve span{display:inline-block;transition:transform .2s}
 .roleta-ctrl button.arr{width:48px;height:48px;border-radius:50%;border:2px solid #6c8ebf;background:transparent;color:#dde4ed;cursor:pointer;display:grid;place-items:center}
 .roleta-ctrl button.arr:hover{border-color:#dde4ed}
 .dots{display:flex;gap:4px}
@@ -805,6 +810,7 @@ svg[data-pk].walking{animation:none}
           <div class="dots" id="dots"></div>
           <button class="arr" type="button" id="next" aria-label="Próximo plano"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
         </div>
+        <p class="em-breve rv"><strong>Vem mais por aí.</strong> Novos planos e Packs especiais estão a caminho.<br><a href="https://instagram.com/opackcervejas" target="_blank" rel="noopener">Quero ser avisado <span aria-hidden="true">→</span></a></p>
               </div>
     </div>
   </section>
