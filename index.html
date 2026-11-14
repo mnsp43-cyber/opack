@@ -1108,14 +1108,15 @@ svg[data-pk].walking{animation:none}
   (function(){
     var pk = document.querySelector('.peek'); if (!pk) return;
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var svg = pk.querySelector('.peek-head svg'), vis = false, raf = 0, cur = 1, lastY = window.scrollY, v = 0;
+    var svg = pk.querySelector('.peek-head svg'), vis = false, raf = 0, cur = 1, lastY = window.scrollY, v = 0, dir = 1;
     svg.style.transition = 'none'; svg.style.transform = 'translateY(100%)';
     function kick(){ if (!raf) raf = requestAnimationFrame(step); }
     function step(){
       raf = 0;
-      var y = window.scrollY, dy = Math.abs(y - lastY); lastY = y;
+      var y = window.scrollY, d = y - lastY, dy = Math.abs(d); lastY = y;
+      if (d) dir = d > 0 ? 1 : -1;
       v = v * .8 + dy * .2;
-      var target = pk.classList.contains('in') ? Math.min(.8, v / 18) : 1;
+      var target = pk.classList.contains('in') ? Math.min(dir > 0 ? .35 : .55, v / 10) : 1;
       cur += (target - cur) * .12; if (Math.abs(target - cur) < .002) cur = target;
       svg.style.transform = 'translateY(' + (cur * 100).toFixed(2) + '%)';
       if (vis && (Math.abs(target - cur) > .002 || v > .05)) raf = requestAnimationFrame(step);
