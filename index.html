@@ -296,6 +296,15 @@ body.menu-open::before{background:var(--azul-escuro)}
 .ass-pick .q{margin:0;font-weight:300;line-height:1.1}
 .ass-pick .q span{display:block;font-weight:900;font-stretch:122%;color:var(--laranja);}
 .ass-pick .sub{margin:16px 0 0;font-weight:300;font-size:1rem;line-height:1.5;max-width:30em}
+@media (max-width:959px){
+  .ass-grid{gap:80px}
+  .ass-txt,.ass-pick{text-align:center}
+  .ass-txt p,.ass-pick .sub{margin-inline:auto}
+  .ass-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:360px;margin:32px auto 0}
+  .ass-steps li{flex-direction:column;align-items:center;gap:8px}
+  .ass-txt .ass-close{margin-top:32px}
+  .ass-pick{margin-bottom:32px}
+}
 @media (min-width:960px){.ass-pick{text-align:center;margin-bottom:64px}.ass-pick .sub{margin-inline:auto}}
 .roleta{position:relative;height:584px;touch-action:pan-y;-webkit-user-select:none;user-select:none}
 .plan{position:absolute;left:50%;top:0;width:min(340px,82%);height:560px;border-radius:24px;background:#dde4ed;color:var(--azul-escuro);overflow:hidden;display:flex;flex-direction:column;transition:transform .45s var(--rv-ease,ease);transform:translateX(-50%)}
