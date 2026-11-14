@@ -403,7 +403,7 @@ body.menu-open::before{background:var(--azul-escuro)}
 .ft-pop{text-decoration:none;padding-block:4px;color:inherit;cursor:pointer}
 .ft-pop:hover{text-decoration:underline;text-underline-offset:4px}
 /* Pop-up do institucional */
-.modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;padding-top:calc(env(safe-area-inset-top,0px) + 16px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+.modal{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:16px;padding-top:calc(env(safe-area-inset-top,0px) + 16px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
 .modal[hidden]{display:none}
 .modal-bg{position:absolute;inset:0;background:rgba(16,51,117,.72)}
 .modal-box{position:relative;width:min(640px,100%);max-height:min(82svh,760px);display:flex;flex-direction:column;background:#dde4ed;color:#103375;border-radius:24px;padding:32px 24px 24px;box-shadow:0 30px 60px -20px rgba(16,51,117,.6)}
@@ -448,6 +448,10 @@ body.menu-open::before{background:var(--azul-escuro)}
 .gate p{margin:16px 0 24px;font-weight:300}
 .gate .row{display:flex;gap:12px;justify-content:center}
 .gate .msg{min-height:1.5em;margin-top:16px}
+.gate .gate-legal{margin:24px auto 0;max-width:22rem;font-size:.75rem;line-height:1.5;opacity:.85}
+.gate-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.gate-legal a:hover{color:var(--laranja)}
+.gate.denied .row,.gate.denied .gate-legal{display:none}
 
 /* Personagens vivos */
 svg[data-pk],svg.pk-fingers{overflow:visible}
@@ -611,6 +615,7 @@ svg[data-pk].walking{animation:none}
       <button class="btn" id="gate-yes" type="button">Sim, tenho</button>
       <button class="btn ghost" id="gate-no" type="button">Ainda não</button>
     </div>
+    <p class="gate-legal">Ao entrar, você confirma que tem 18 anos ou mais e concorda com os <a href="#" data-modal="termos">Termos de Uso</a> e a <a href="#" data-modal="privacidade">Política de Privacidade</a>.</p>
     <p class="msg" id="gate-msg" aria-live="polite"></p>
   </div>
 </div>
@@ -983,14 +988,22 @@ svg[data-pk].walking{animation:none}
 
   /* Gate de idade */
   var gate = document.getElementById('gate'), ok = false;
-  try { ok = localStorage.getItem('opack-18') === 'sim'; } catch(e) {}
-  if (!ok) { gate.classList.add('show'); body.style.overflow = 'hidden'; setTimeout(function(){ document.getElementById('gate-yes').focus(); }, 50); }
+  /* "Sim" vale por 30 dias neste aparelho; "Ainda não" vale até fechar o navegador */
+  var GATE_DIAS = 30, NAO_MSG = 'Então volta quando fizer 18. A gente guarda um rótulo pra você.';
+  try { var t = parseInt(localStorage.getItem('opack-18'), 10); ok = t > 0 && (Date.now() - t) < GATE_DIAS * 864e5; } catch(e) {}
+  function negar(){ gate.classList.add('denied'); document.getElementById('gate-msg').textContent = NAO_MSG; }
+  if (!ok) {
+    gate.classList.add('show'); body.style.overflow = 'hidden';
+    var nao = false; try { nao = sessionStorage.getItem('opack-18-nao') === '1'; } catch(e) {}
+    if (nao) negar(); else setTimeout(function(){ document.getElementById('gate-yes').focus(); }, 50);
+  }
   document.getElementById('gate-yes').addEventListener('click', function(){
-    try { localStorage.setItem('opack-18','sim'); } catch(e) {}
+    try { localStorage.setItem('opack-18', String(Date.now())); } catch(e) {}
     gate.classList.remove('show'); body.style.overflow = '';
   });
   document.getElementById('gate-no').addEventListener('click', function(){
-    document.getElementById('gate-msg').textContent = 'Então volta quando fizer 18. A gente guarda um rótulo pra você.';
+    try { sessionStorage.setItem('opack-18-nao', '1'); } catch(e) {}
+    negar();
   });
 
   /* Menu mobile */
@@ -1541,7 +1554,8 @@ svg[data-pk].walking{animation:none}
     }
     function close(){
       modal.classList.remove('open'); modal.hidden = true;
-      document.body.style.overflow = '';
+      var g = document.getElementById('gate');
+      document.body.style.overflow = g && g.classList.contains('show') ? 'hidden' : '';
       if (last) last.focus();
     }
     document.querySelectorAll('[data-modal]').forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); open(b.getAttribute('data-modal'), b); }); });
