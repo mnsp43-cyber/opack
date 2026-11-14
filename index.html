@@ -183,6 +183,7 @@ body.menu-open::before{background:var(--azul-escuro)}
 .sign .pk-sign svg{display:block;width:100%;height:auto}
 .sign .pk-sign svg[data-pk]{clip-path:inset(24px -50% -50% -50%)}
 .sign .pk-sign .pk-fingers{position:absolute;inset:0;pointer-events:none}
+.sign .pk-sign .pk-hop{cursor:default}
 .sign .btn:hover + .pk-sign{animation:hop .5s ease}
 @keyframes hop{40%{transform:translateY(-8px)}}
 
@@ -1388,7 +1389,7 @@ svg[data-pk].walking{animation:none}
       hop.addEventListener('pointerup', function(e){ if (down && Math.abs(e.clientX - down.x) < 12 && Math.abs(e.clientY - down.y) < 12 && Date.now() - down.t < 600) jump(); down = null; });
       hop.addEventListener('click', jump);
       function jump(){
-        if (m.hopping) return; m.hopping = true;
+        if (m.type === 'sign' || m.hopping) return; m.hopping = true;
         var a = hop.animate([{transform:'translateY(0)'},{transform:'translateY(-14%) scale(1.03)', offset:.4},{transform:'translateY(0)', offset:.75},{transform:'translateY(-3%)', offset:.88},{transform:'translateY(0)'}], {duration:620, easing:'ease-out'});
         a.onfinish = function(){ m.hopping = false; };
         blink(m); setTimeout(function(){ brow(m); }, 120);
