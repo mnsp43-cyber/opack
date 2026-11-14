@@ -266,11 +266,18 @@ body.menu-open::before{background:var(--azul-escuro)}
 /* Assinaturas */
 .ass-grid{display:grid;gap:var(--gap-block)}
 @media (min-width:960px){.ass-grid{grid-template-columns:.8fr 1.2fr;align-items:center;gap:var(--gap-block)}}
-.ass-txt .t .hi{color:var(--azul-medio)}
+.ass-txt .t .hi{color:var(--laranja)}
 .ass-txt .nl{display:block}
 .ass-txt p{margin:16px 0 0;font-weight:300;font-size:1.1rem;max-width:22em}
-.ass-txt .q{margin-top:32px;font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.1}
-.ass-txt .q span{display:block;font-weight:900;font-stretch:122%;color:var(--laranja);font-size:1.3em}
+.ass-steps{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px}
+.ass-steps li{display:flex;align-items:baseline;gap:8px;font-weight:600;font-stretch:105%;font-size:clamp(1.3rem,2.4vw,1.6rem);line-height:1.2}
+.ass-steps .n{color:var(--laranja);font-weight:900;font-stretch:110%;font-size:.75em}
+.ass-txt .ass-close{margin-top:16px}
+.ass-pick{margin-bottom:24px}
+.ass-pick .q{margin:0;font-weight:300;font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.1}
+.ass-pick .q span{display:block;font-weight:900;font-stretch:122%;color:var(--laranja);font-size:1.3em}
+.ass-pick .sub{margin:16px 0 0;font-weight:300;font-size:1rem;line-height:1.5;max-width:30em}
+@media (min-width:960px){.ass-pick{text-align:center;margin-bottom:40px}.ass-pick .sub{margin-inline:auto}}
 .roleta{position:relative;height:584px;touch-action:pan-y;-webkit-user-select:none;user-select:none}
 .plan{position:absolute;left:50%;top:0;width:min(340px,82%);height:560px;border-radius:24px;background:#dde4ed;color:var(--azul-escuro);overflow:hidden;display:flex;flex-direction:column;transition:transform .45s var(--rv-ease,ease);transform:translateX(-50%)}
 .roleta.dragging .plan[data-pos="0"]{transition:none}
@@ -600,11 +607,18 @@ svg[data-pk].walking{animation:none}
     <div class="wrap ass-grid">
       <div class="ass-txt">
         <h2 class="t t-m rvt"><span class="hi">É simples assim.</span></h2>
-        <p class="rv">Assine, receba e aproveite. <span class="nl">O resto a gente deixa acontecer.</span></p>
-        <p class="q rv" style="--dl:.1s">Qual vai ser <span>o seu?</span></p>
-        <p class="rv" style="--dl:.15s">Escolha entre o Pack do mês ou uma assinatura para continuar recebendo novas seleções nos próximos meses.</p>
+        <ol class="ass-steps" data-stagger aria-label="Como funciona">
+          <li><span class="n" aria-hidden="true">1</span>Assine</li>
+          <li><span class="n" aria-hidden="true">2</span>Receba</li>
+          <li><span class="n" aria-hidden="true">3</span>Aproveite</li>
+        </ol>
+        <p class="ass-close rv" style="--dl:.25s">O resto a gente deixa acontecer.</p>
       </div>
       <div class="rv" id="assinaturas" style="--dl:.15s">
+        <div class="ass-pick">
+          <p class="q">Qual vai ser <span>o seu?</span></p>
+          <p class="sub">Escolha entre o Pack do mês ou uma assinatura para continuar recebendo novas seleções nos próximos meses.</p>
+        </div>
         <div class="roleta" id="roleta" aria-roledescription="carrossel" aria-label="As opções de Pack">
           <article class="plan p1" data-pos="x" aria-label="Pack do mês"><div class="plan-top"><svg class="tp-deco" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg><h3>Pack do mês</h3></div><div class="plan-body"><p class="tag">Uma edição para conhecer agora.</p><p><b class="brand">O Pack</b> disponível neste mês, com uma seleção de Pilsens paulistas.</p><ul><li>1 edição</li><li>6 rótulos</li><li>Compra única</li></ul><div class="price"><span class="ph">R$ XX,XX</span></div><a class="btn" href="#assinaturas">Quero este Pack</a></div></article><article class="plan p2" data-pos="x" aria-label="Assinatura 3 meses"><div class="plan-top"><svg class="tp-deco" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg><h3>Assinatura 3 meses</h3></div><div class="plan-body"><p class="tag">Três meses para sair do óbvio.</p><p>Receba uma nova seleção a cada mês e conheça diferentes rótulos, cervejarias e histórias ao longo de três edições.</p><ul><li>3 edições</li><li>1 Pack por mês</li><li>6 rótulos por edição</li></ul><div class="price"><span class="ph">R$ XXX,XX</span></div><a class="btn" href="#assinaturas">Assinar por 3 meses</a></div></article><article class="plan p3" data-pos="x" aria-label="Assinatura 6 meses"><div class="plan-top"><svg class="tp-deco" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg><h3>Assinatura 6 meses</h3></div><div class="plan-body"><p class="tag">Mais tempo para conhecer o que São Paulo tem por aí.</p><p>Seis edições para acompanhar diferentes rótulos e cervejarias e encontrar novos favoritos pelo caminho.</p><ul><li>6 edições</li><li>1 Pack por mês</li><li>6 rótulos por edição</li></ul><div class="price"><span class="ph">R$ XXX,XX</span></div><a class="btn" href="#assinaturas">Assinar por 6 meses</a></div></article>
         </div>
