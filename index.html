@@ -108,10 +108,9 @@ body.hdr-hide:not(.menu-open) .hdr{transform:translateY(-100%)}
 .hdr{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background-color .3s ease,transform .35s cubic-bezier(.4,0,.2,1)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:49;background:transparent;transition:background-color .3s}
 body.scrolled::before,body.scrolled .hdr{background:var(--azul-escuro)}
-/* Vidro: cards de "O que vem" e tela de idade */
+/* Vidro: cards de "O que vem" */
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
   .steps .step-card{background:rgba(221,228,237,.8);-webkit-backdrop-filter:blur(28px) saturate(.9);backdrop-filter:blur(28px) saturate(.9)}
-  body .gate{background:rgba(16,51,117,.55);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
 }
 .hdr-in{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:24px;color:#dde4ed}
 .hdr-logo{display:block;width:104px;color:#dde4ed}
