@@ -537,10 +537,7 @@ svg[data-pk].walking{animation:none}
 
 
 /* Mapa V4: blocos novos, no mesmo sistema (8px, escala tipográfica, cores da marca) */
-.para-quem{margin:calc(var(--sec-y) * 1.5) auto 0;max-width:34em;text-align:center}
 #o-que-e{padding-bottom:calc(var(--sec-y) * .5)}
-.para-quem p{margin:16px 0 0;color:var(--ink-soft)}
-.para-quem .pq-note{font-weight:700;color:var(--azul-escuro)}
 .oqv-head .lede p:last-child{margin-bottom:0}
 .stage[data-step="4"] .box{transform:scale(1.06)}
 .dot-list{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:8px}
@@ -663,6 +660,23 @@ body.menu-open .cta-bar{display:none}
 }
 .ass-area,.price .economia,.cta-bar,.ciclo-link{font-size:1rem}
 .price .renova{font-size:.75rem}
+
+/* Para quem é: sequência guiada pela rolagem */
+.pq{margin:calc(var(--sec-y) * 1.5) auto 0;text-align:center}
+.pq-t{margin:0;font-weight:900;font-stretch:125%;color:var(--laranja);line-height:1;font-size:2.5rem}
+.pq-t span{display:inline-block}
+.pq-items{list-style:none;margin:32px auto 0;padding:0;display:flex;flex-direction:column;align-items:center;gap:16px}
+.pq-items li{border:1.5px solid #6c8ebf;border-radius:999px;padding:8px 24px;font-weight:700;font-stretch:105%;font-size:1.25rem;line-height:1.3;color:var(--azul-escuro);background:var(--paper)}
+@media (min-width:360px){.pq-items li{white-space:nowrap;padding-inline:16px}}
+.pq-items li:first-child{background:var(--azul-escuro);border-color:var(--azul-escuro);color:#dde4ed}
+.pq-items li:last-child{background:var(--laranja);border-color:var(--laranja)}
+.pq.pq-anim{height:260svh;margin-top:0}
+.pq.pq-anim .pq-stick{position:sticky;top:var(--header-h);height:calc(100svh - var(--header-h));overflow:hidden}
+.pq.pq-anim .pq-t{position:absolute;left:50%;top:50%;width:max-content;max-width:100%;font-size:4rem;transform-origin:50% 50%;will-change:transform}
+.pq.pq-anim .pq-t span{display:block}
+.pq.pq-anim .pq-items{position:absolute;left:0;right:0;top:50%;margin:0;transform:translateY(-35%)}
+.pq.pq-anim .pq-items li{opacity:0}
+@media (min-width:768px){.pq-t{font-size:3rem}.pq.pq-anim .pq-t{font-size:6rem}.pq.pq-anim .pq-t span{display:inline-block}.pq-items li{font-size:1.5rem}}
 
 /* Escala tipográfica (regra de 8px): 12 · 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64 · 72 · 80 · 96 */
 .t-xl{font-size:2rem}
@@ -850,10 +864,17 @@ body.menu-open .cta-bar{display:none}
         <div class="pilar"><svg class="face" data-pk="face" viewBox="0 0 116.97 116.97" aria-hidden="true" style="--bk:5.8s;--bkd:-3.1s;--bw:11s;--bwd:-6s"><path fill="#f08119" d="M58.48,0l4.13,5.9c1.71,2.44,5.12,2.96,7.47,1.13l5.68-4.41,2.22,6.87c.92,2.84,4.02,4.33,6.81,3.28l6.73-2.54.1,7.23c.04,2.98,2.56,5.31,5.53,5.13l7.18-.44-2.03,6.94c-.83,2.85.88,5.83,3.77,6.53l7,1.71-3.98,6.04c-1.64,2.48-.87,5.82,1.68,7.35l6.19,3.7-5.58,4.59c-2.29,1.89-2.55,5.31-.56,7.52l4.83,5.37-6.67,2.74c-2.75,1.13-4,4.32-2.75,7.02l3.04,6.56-7.17.64c-2.96.27-5.1,2.95-4.7,5.9l.97,7.17-7.03-1.5c-2.91-.62-5.75,1.31-6.24,4.25l-1.17,7.13-6.27-3.51c-2.6-1.46-5.89-.44-7.22,2.23l-3.21,6.45-4.96-5.21c-2.06-2.16-5.5-2.16-7.56,0l-4.96,5.21-3.21-6.45c-1.33-2.67-4.62-3.68-7.22-2.23l-6.27,3.51-1.17-7.13c-.48-2.94-3.33-4.88-6.24-4.25l-7.03,1.5.97-7.17c.4-2.95-1.74-5.63-4.7-5.9l-7.17-.64,3.04-6.56c1.25-2.7,0-5.89-2.75-7.02l-6.67-2.74,4.83-5.37c1.99-2.21,1.73-5.63-.56-7.52l-5.58-4.59,6.19-3.7c2.55-1.53,3.31-4.87,1.68-7.35l-3.98-6.04,7-1.71c2.89-.7,4.61-3.68,3.77-6.53l-2.03-6.94,7.18.44c2.97.18,5.49-2.16,5.53-5.13l.1-7.23,6.73,2.54c2.79,1.05,5.89-.44,6.81-3.28l2.22-6.87,5.68,4.41c2.35,1.83,5.76,1.32,7.47-1.13l4.13-5.9Z"/><g class="brows" fill="#fff"><path d="M31.04,35.88c-.7,0-1.41-.22-2.01-.69-1.44-1.11-1.71-3.19-.6-4.63.88-1.15,5.7-6.88,13.8-6.58,6.68.23,10.88,4.51,12,5.81,1.19,1.38,1.04,3.46-.34,4.66-1.38,1.19-3.47,1.04-4.66-.34-.68-.79-3.23-3.38-7.24-3.53-5.05-.15-8.01,3.58-8.34,4.01-.65.84-1.63,1.29-2.62,1.29Z"/><path d="M74.73,40.35c-.46,0-.93-.02-1.4-.05-3.99-.27-7.94-1.77-11.12-4.21-1.45-1.11-1.72-3.18-.61-4.63,1.11-1.45,3.18-1.72,4.63-.61,1.25.96,3.9,2.61,7.55,2.86,3.32.23,5.93-.76,7.55-1.63,1.61-.86,3.61-.26,4.47,1.35.86,1.61.26,3.61-1.35,4.47-2.15,1.15-5.5,2.45-9.72,2.45Z"/></g><g class="eyes-b" fill="#fff"><path d="M74.86,72.68c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM74.86,49.29c-4.63,0-8.39,3.77-8.39,8.4s3.77,8.4,8.39,8.4,8.4-3.77,8.4-8.4-3.77-8.4-8.4-8.4Z"/><path d="M42.11,72.68c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM42.11,49.29c-4.63,0-8.4,3.77-8.4,8.4s3.77,8.4,8.4,8.4,8.39-3.77,8.39-8.4-3.77-8.4-8.39-8.4Z"/></g></svg><h3>Curadoria</h3><p>A gente seleciona rótulos e cervejarias para facilitar a sua escolha.</p></div>
         <div class="pilar"><svg class="face az" data-pk="face" viewBox="0 0 116.97 116.97" aria-hidden="true" style="--bk:7.1s;--bkd:-4.4s;--bw:13s;--bwd:-9s"><path fill="#103375" d="M58.48,0l4.13,5.9c1.71,2.44,5.12,2.96,7.47,1.13l5.68-4.41,2.22,6.87c.92,2.84,4.02,4.33,6.81,3.28l6.73-2.54.1,7.23c.04,2.98,2.56,5.31,5.53,5.13l7.18-.44-2.03,6.94c-.83,2.85.88,5.83,3.77,6.53l7,1.71-3.98,6.04c-1.64,2.48-.87,5.82,1.68,7.35l6.19,3.7-5.58,4.59c-2.29,1.89-2.55,5.31-.56,7.52l4.83,5.37-6.67,2.74c-2.75,1.13-4,4.32-2.75,7.02l3.04,6.56-7.17.64c-2.96.27-5.1,2.95-4.7,5.9l.97,7.17-7.03-1.5c-2.91-.62-5.75,1.31-6.24,4.25l-1.17,7.13-6.27-3.51c-2.6-1.46-5.89-.44-7.22,2.23l-3.21,6.45-4.96-5.21c-2.06-2.16-5.5-2.16-7.56,0l-4.96,5.21-3.21-6.45c-1.33-2.67-4.62-3.68-7.22-2.23l-6.27,3.51-1.17-7.13c-.48-2.94-3.33-4.88-6.24-4.25l-7.03,1.5.97-7.17c.4-2.95-1.74-5.63-4.7-5.9l-7.17-.64,3.04-6.56c1.25-2.7,0-5.89-2.75-7.02l-6.67-2.74,4.83-5.37c1.99-2.21,1.73-5.63-.56-7.52l-5.58-4.59,6.19-3.7c2.55-1.53,3.31-4.87,1.68-7.35l-3.98-6.04,7-1.71c2.89-.7,4.61-3.68,3.77-6.53l-2.03-6.94,7.18.44c2.97.18,5.49-2.16,5.53-5.13l.1-7.23,6.73,2.54c2.79,1.05,5.89-.44,6.81-3.28l2.22-6.87,5.68,4.41c2.35,1.83,5.76,1.32,7.47-1.13l4.13-5.9Z"/><g class="brows" fill="#fff"><path d="M26.49,40.82c-.57,0-1.14-.15-1.66-.45-1.57-.92-2.11-2.94-1.18-4.52,1.1-1.89,4.34-6.48,10.57-8.43,6.56-2.04,12.04.17,14.09,1.22,1.62.83,2.26,2.82,1.43,4.44-.83,1.62-2.82,2.27-4.44,1.43-1.04-.53-4.76-2.16-9.12-.8-4.03,1.26-6.12,4.23-6.84,5.45-.61,1.05-1.72,1.64-2.85,1.64Z"/><path d="M90.48,40.82c-1.13,0-2.24-.58-2.85-1.63-.72-1.22-2.82-4.2-6.84-5.46-4.36-1.36-8.08.27-9.12.8-1.62.83-3.61.19-4.44-1.43-.83-1.62-.19-3.61,1.43-4.44,2.05-1.05,7.53-3.27,14.09-1.22,6.23,1.94,9.47,6.54,10.57,8.42.92,1.57.39,3.6-1.18,4.52-.52.31-1.1.45-1.67.45Z"/></g><g class="eyes-b" fill="#fff"><path d="M42.11,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM42.11,49.69c-4.63,0-8.4,3.77-8.4,8.4s3.77,8.4,8.4,8.4,8.39-3.77,8.39-8.4-3.77-8.4-8.39-8.4Z"/><path d="M74.86,73.08c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM74.86,49.69c-4.63,0-8.39,3.77-8.39,8.4s3.77,8.4,8.39,8.4,8.4-3.77,8.4-8.4-3.77-8.4-8.4-8.4Z"/></g></svg><h3>Experiência</h3><p>A embalagem, a revista e cada detalhe fazem parte do que chega até você.</p></div>
       </div>
-            <div class="para-quem rv">
-        <h3 class="t t-m"><span class="hi">Para quem é?</span></h3>
-        <p><b class="brand">O Pack</b> é para maiores de 18 anos, especialmente adultos entre 25 e 50 anos, curiosos e com vontade de experimentar.</p>
-        <p class="pq-note">E não precisa ser especialista em cerveja para aproveitar.</p>
+            <div class="pq" id="para-quem">
+        <div class="pq-stick">
+          <h3 class="pq-t"><span>Para</span> <span>quem é?</span></h3>
+          <ul class="pq-items">
+            <li>Maiores de 18 anos</li>
+            <li>Especialmente de 25 a 50</li>
+            <li>Curiosos</li>
+            <li>Com vontade de experimentar</li>
+            <li>Sem precisar ser especialista</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -1216,6 +1237,34 @@ body.menu-open .cta-bar{display:none}
     el.style.boxShadow = sh + '0 1px 0 0 ' + bg + ', 0 -1px 0 0 ' + bg;
   });
 
+
+  /* Para quem é: o título aparece grande e as informações entram uma a uma com a rolagem */
+  (function(){
+    var pq = document.getElementById('para-quem'); if (!pq) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var t = pq.querySelector('.pq-t'), lis = [].slice.call(pq.querySelectorAll('.pq-items li')), stick = pq.querySelector('.pq-stick');
+    pq.classList.add('pq-anim');
+    var vis = false, raf = 0;
+    function cl(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function ease(v){ v = cl(v); return v * v * (3 - 2 * v); }
+    function step(){
+      raf = 0;
+      var r = pq.getBoundingClientRect(), total = pq.offsetHeight - stick.offsetHeight;
+      var p = cl(-r.top / total), e = ease(p / .28);
+      var h = stick.offsetHeight, up = h * .5 - Math.min(h * .2, 140);
+      t.style.transform = 'translate(-50%,-50%) translate3d(0,' + (-e * up).toFixed(1) + 'px,0) scale(' + (1 - e * .5).toFixed(3) + ')';
+      lis.forEach(function(li, i){
+        var a = ease((p - (.3 + i * .11)) / .12);
+        li.style.opacity = a.toFixed(3);
+        li.style.transform = 'translate3d(0,' + ((1 - a) * 24).toFixed(1) + 'px,0) scale(' + (.9 + a * .1).toFixed(3) + ')';
+      });
+    }
+    function kick(){ if (vis && !raf) raf = requestAnimationFrame(step); }
+    new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pq);
+    window.addEventListener('scroll', kick, {passive:true});
+    window.addEventListener('resize', kick);
+    step();
+  })();
 
   /* Como funciona: no celular, o detalhe de cada passo abre ao tocar */
   (function(){
