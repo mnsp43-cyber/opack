@@ -550,11 +550,19 @@ svg[data-pk].walking{animation:none}
 .brindes{margin:var(--gap-block) auto 0;max-width:36rem;text-align:center;color:var(--ink)}
 .brindes h4{margin:0;font-weight:900;font-stretch:120%;line-height:1.1;color:var(--azul-escuro)}
 .brindes .br-sub{margin:8px 0 0}
-.br-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-.br-card{display:flex;flex-direction:column;align-items:center;border:1.5px solid #6c8ebf;border-radius:20px;padding:24px 16px}
+.br-cards{display:grid;gap:16px;margin-top:32px;text-align:left}
+.br-card{position:relative;display:block;border:1.5px solid #6c8ebf;border-radius:20px;padding:16px 24px 24px;background:var(--paper);transform-origin:50% 0}
+.br-pin.br-anim .brindes{position:sticky;top:var(--br-top,var(--header-h))}
+.br-pin.br-anim .br-cards{gap:0}
+.br-pin.br-anim .br-card{grid-area:1 / 1;align-self:start}
+.br-pin.br-anim .br-card:nth-child(2){margin-top:64px;z-index:2;box-shadow:0 -16px 32px -20px rgba(16,51,117,.5);will-change:transform}
+.br-pin.br-anim .brindes-note{margin-top:24px}
 .br-card b{font-weight:900;font-stretch:125%;line-height:1;color:var(--laranja)}
-.br-u{font-weight:700;color:var(--azul-escuro)}
-.br-plan{margin-top:16px;font-weight:600;line-height:1.3;color:var(--azul-escuro)}
+.br-row{display:flex;flex-direction:column;margin-top:16px}
+.br-row .br-when{margin-top:8px}
+.br-plan{display:block;padding-bottom:16px;border-bottom:1px solid #6c8ebf}
+.br-card .br-u{font:inherit;color:inherit}
+.br-plan{font-weight:800;font-stretch:108%;line-height:1.5;color:var(--azul-escuro)}
 .br-when{margin-top:8px;line-height:1.5;opacity:.85}
 .brindes .brindes-note{margin:16px 0 0;opacity:.85}
 .porque{margin-top:64px;text-align:center}
@@ -614,10 +622,12 @@ svg[data-pk].walking{animation:none}
 .cf-steps .n{font-size:1.5rem}
 .cf-steps h3,.ent-card h3{font-size:1.25rem}
 .brindes h4{font-size:1.5rem}
-.br-card b{font-size:3rem}
-.br-u,.br-plan,.brindes .br-sub{font-size:1rem}
-.br-when,.brindes .brindes-note{font-size:.75rem}
-@media (min-width:768px){.brindes h4{font-size:2rem}.br-card b{font-size:4rem}}
+.br-when,.brindes .br-sub{font-size:1rem}
+.br-plan{font-size:1rem}
+.br-card .br-u{font-size:2rem}
+.brindes .brindes-note{font-size:.75rem}
+.br-card b{font-size:4rem}
+@media (min-width:768px){.brindes h4{font-size:2rem}}
 .parc li .lg .lg-in{font-size:1.5rem}
 .parc-desc,.parc-note{font-size:.75rem}
 .fav-txt{font-size:1rem}
@@ -910,15 +920,15 @@ body.menu-open .cta-bar{display:none}
         <h3 class="t t-m rvt"><span class="hi"><span class="count" data-to="6">6</span> rótulos</span><span class="lo">para descobrir. E uma revista para acompanhar cada escolha.</span></h3>
         <div class="lede rv"><p>Os rótulos e as cervejarias mudam a cada edição. E, quando fizer sentido na curadoria, uma mesma cervejaria pode aparecer com mais de um rótulo.</p></div>
       </div>
-      <div class="brindes rv">
+      <div class="br-pin"><div class="brindes rv">
         <h4>Brindes pelo caminho</h4>
         <p class="br-sub">Não vêm em todas as edições.<br>A gente avisa antes.</p>
         <div class="br-cards">
-          <div class="br-card"><b>1</b><span class="br-u">brinde</span><span class="br-plan">Assinatura<br>de 3 meses</span><span class="br-when">No primeiro Pack</span></div>
-          <div class="br-card"><b>2</b><span class="br-u">brindes</span><span class="br-plan">Assinatura<br>de 6 meses</span><span class="br-when">No primeiro Pack e outro ao longo da assinatura</span></div>
+          <div class="br-card"><span class="br-plan">Assinatura de 3 meses</span><div class="br-row"><b>1 <span class="br-u">brinde</span></b><span class="br-when">No primeiro Pack.</span></div></div>
+          <div class="br-card"><span class="br-plan">Assinatura de 6 meses</span><div class="br-row"><b>2 <span class="br-u">brindes</span></b><span class="br-when">No primeiro Pack e outro ao longo da assinatura.</span></div></div>
         </div>
         <p class="brindes-note">Os itens podem variar conforme a edição, a época do ano, ações especiais e disponibilidade.</p>
-      </div>
+      </div></div>
     </div>
   </section>
 
@@ -1288,6 +1298,41 @@ body.menu-open .cta-bar{display:none}
     new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pq);
     window.addEventListener('scroll', kick, {passive:true});
     window.addEventListener('resize', setup);
+    setup(); vis = true; step();
+  })();
+
+  /* Brindes: com a rolagem, a segunda carta sobe e para por cima da primeira, deixando o topo dela à mostra */
+  (function(){
+    var pin = document.querySelector('.br-pin'); if (!pin) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var box = pin.querySelector('.brindes'), cards = [].slice.call(pin.querySelectorAll('.br-card')), note = pin.querySelector('.brindes-note');
+    if (cards.length < 2) return;
+    pin.classList.add('br-anim');
+    var raf = 0, bh = 0, dist = 0, vis = false;
+    function setup(){
+      bh = box.offsetHeight; dist = cards[0].offsetHeight + 16 - 64;
+      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 68;
+      var top = Math.max(hh + 16, (window.innerHeight - bh) / 2 + hh / 2);
+      pin.style.setProperty('--br-top', top + 'px');
+      pin.style.height = (bh + window.innerHeight * .7) + 'px';
+      kick();
+    }
+    function cl(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function ease(v){ v = cl(v); return v * v * (3 - 2 * v); }
+    function step(){
+      raf = 0;
+      var r = pin.getBoundingClientRect(), top = parseFloat(pin.style.getPropertyValue('--br-top')) || 0;
+      var e = ease((top - r.top) / (pin.offsetHeight - bh) / .8);
+      cards[1].style.transform = 'translate3d(0,' + ((1 - e) * dist).toFixed(1) + 'px,0)';
+      cards[0].style.transform = 'scale(' + (1 - e * .05).toFixed(4) + ')';
+      cards[0].style.opacity = (1 - e * .2).toFixed(3);
+      note.style.opacity = e.toFixed(3);
+    }
+    function kick(){ if (vis && !raf) raf = requestAnimationFrame(step); }
+    new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pin);
+    window.addEventListener('scroll', kick, {passive:true});
+    window.addEventListener('resize', setup);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setup);
     setup(); vis = true; step();
   })();
 
