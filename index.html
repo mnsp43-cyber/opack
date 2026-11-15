@@ -1319,8 +1319,13 @@ svg[data-pk].walking{animation:none}
   [].forEach.call(document.querySelectorAll('main > section, main > .cover-pair > section, footer > section, footer > .mod'), function(el){
     var cs = getComputedStyle(el), bg = cs.backgroundColor;
     if (!bg || bg === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(bg)) return;
+    /* bordas arredondadas não recebem a emenda: o filete deslocado deixava um degrau no fim da curva */
+    var add = [];
+    if (!parseFloat(cs.borderBottomLeftRadius) && !parseFloat(cs.borderBottomRightRadius)) add.push('0 1px 0 0 ' + bg);
+    if (!parseFloat(cs.borderTopLeftRadius) && !parseFloat(cs.borderTopRightRadius)) add.push('0 -1px 0 0 ' + bg);
+    if (!add.length) return;
     var sh = cs.boxShadow && cs.boxShadow !== 'none' ? cs.boxShadow + ', ' : '';
-    el.style.boxShadow = sh + '0 1px 0 0 ' + bg + ', 0 -1px 0 0 ' + bg;
+    el.style.boxShadow = sh + add.join(', ');
   });
 
 
