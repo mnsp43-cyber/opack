@@ -547,10 +547,16 @@ svg[data-pk].walking{animation:none}
 .flow li{display:flex;align-items:center;font-weight:600;line-height:1.3}
 .flow li:not(:last-child)::after{content:"→";margin:0 8px;color:var(--laranja);font-weight:700}
 .flow span{border:1.5px solid #6c8ebf;border-radius:999px;padding:4px 12px}
-.brindes{margin:var(--gap-block) auto 0;max-width:36rem;border:1.5px solid #6c8ebf;border-radius:20px;padding:24px;color:var(--ink)}
-.brindes h4{margin:0 0 8px;font-weight:800;font-stretch:110%;line-height:1.25;color:var(--azul-escuro)}
-.brindes p{margin:0 0 16px}
-.brindes .brindes-note{margin:0;opacity:.85}
+.brindes{margin:var(--gap-block) auto 0;max-width:36rem;text-align:center;color:var(--ink)}
+.brindes h4{margin:0;font-weight:900;font-stretch:120%;line-height:1.1;color:var(--azul-escuro)}
+.brindes .br-sub{margin:8px 0 0}
+.br-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.br-card{display:flex;flex-direction:column;align-items:center;border:1.5px solid #6c8ebf;border-radius:20px;padding:24px 16px}
+.br-card b{font-weight:900;font-stretch:125%;line-height:1;color:var(--laranja)}
+.br-u{font-weight:700;color:var(--azul-escuro)}
+.br-plan{margin-top:16px;font-weight:600;line-height:1.3;color:var(--azul-escuro)}
+.br-when{margin-top:8px;line-height:1.5;opacity:.85}
+.brindes .brindes-note{margin:16px 0 0;opacity:.85}
 .porque{margin-top:64px;text-align:center}
 .porque .lede{margin:0 auto;max-width:34em}
 .porque .lede p:last-child{margin-bottom:0}
@@ -606,7 +612,12 @@ svg[data-pk].walking{animation:none}
 /* tamanhos da escala */
 .brindes p,.dot-list li,.flow li,.porque-list li,.price .parcelas,.ent-card p,.ent-card li,.news-msg{font-size:1rem}
 .cf-steps .n{font-size:1.5rem}
-.cf-steps h3,.brindes h4,.ent-card h3{font-size:1.25rem}
+.cf-steps h3,.ent-card h3{font-size:1.25rem}
+.brindes h4{font-size:1.5rem}
+.br-card b{font-size:3rem}
+.br-u,.br-plan,.brindes .br-sub{font-size:1rem}
+.br-when,.brindes .brindes-note{font-size:.75rem}
+@media (min-width:768px){.brindes h4{font-size:2rem}.br-card b{font-size:4rem}}
 .parc li .lg .lg-in{font-size:1.5rem}
 .parc-desc,.parc-note{font-size:.75rem}
 .fav-txt{font-size:1rem}
@@ -900,10 +911,13 @@ body.menu-open .cta-bar{display:none}
         <div class="lede rv"><p>Os rótulos e as cervejarias mudam a cada edição. E, quando fizer sentido na curadoria, uma mesma cervejaria pode aparecer com mais de um rótulo.</p></div>
       </div>
       <div class="brindes rv">
-        <h4>Brindes e itens extras</h4>
-        <p>Eles não vêm em todas as edições, e a gente sempre avisa antes. Para começar:</p>
-        <ul class="dot-list"><li><b>Assinatura de 3 meses:</b> brinde no primeiro Pack.</li><li><b>Assinatura de 6 meses:</b> brinde no primeiro Pack e outro ao longo da assinatura.</li></ul>
-        <p class="brindes-note">Os itens podem mudar conforme a edição, a época do ano, ações especiais e disponibilidade.</p>
+        <h4>Brindes pelo caminho</h4>
+        <p class="br-sub">Não vêm em todas as edições.<br>A gente avisa antes.</p>
+        <div class="br-cards">
+          <div class="br-card"><b>1</b><span class="br-u">brinde</span><span class="br-plan">Assinatura<br>de 3 meses</span><span class="br-when">No primeiro Pack</span></div>
+          <div class="br-card"><b>2</b><span class="br-u">brindes</span><span class="br-plan">Assinatura<br>de 6 meses</span><span class="br-when">No primeiro Pack e outro ao longo da assinatura</span></div>
+        </div>
+        <p class="brindes-note">Os itens podem variar conforme a edição, a época do ano, ações especiais e disponibilidade.</p>
       </div>
     </div>
   </section>
