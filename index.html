@@ -663,20 +663,16 @@ body.menu-open .cta-bar{display:none}
 
 /* Para quem é: sequência guiada pela rolagem */
 .pq{margin:calc(var(--sec-y) * 1.5) auto 0;text-align:center}
-.pq-t{margin:0;font-weight:900;font-stretch:125%;color:var(--laranja);line-height:1;font-size:2.5rem}
+.pq-t{margin:0;font-weight:900;font-stretch:125%;color:var(--laranja);line-height:1;font-size:3rem}
 .pq-t{white-space:nowrap}
 .pq-items{list-style:none;margin:32px auto 0;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px}
 .pq-items li{border:1.5px solid #6c8ebf;border-radius:999px;padding:4px 16px;font-weight:700;font-stretch:105%;font-size:1rem;line-height:1.5;color:var(--azul-escuro);background:var(--paper)}
 @media (min-width:360px){.pq-items li{white-space:nowrap}}
 .pq-items li:first-child{background:var(--azul-escuro);border-color:var(--azul-escuro);color:#dde4ed}
 .pq-items li:last-child{background:var(--laranja);border-color:var(--laranja)}
-.pq.pq-anim{height:260svh;margin-top:0}
-.pq.pq-anim .pq-stick{position:sticky;top:var(--header-h);height:calc(100svh - var(--header-h));overflow:hidden}
-.pq.pq-anim .pq-t{position:absolute;left:50%;top:50%;width:max-content;font-size:3rem;transform-origin:50% 50%;will-change:transform}
-.pq.pq-anim .pq-items{position:absolute;left:0;right:0;top:50%;margin:0;transform:translateY(-35%)}
+.pq.pq-anim .pq-stick{position:sticky;top:var(--pq-top,var(--header-h))}
 .pq.pq-anim .pq-items li{opacity:0}
-@media (max-width:359px){.pq-t,.pq.pq-anim .pq-t{font-size:2rem}}
-@media (min-width:768px){.pq-t{font-size:3rem}.pq.pq-anim .pq-t{font-size:6rem}.pq-items li{font-size:1.25rem;padding:8px 24px}}
+@media (min-width:768px){.pq-t{font-size:6rem}.pq-items li{font-size:1.25rem;padding:8px 24px}}
 
 /* Escala tipográfica (regra de 8px): 12 · 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64 · 72 · 80 · 96 */
 .t-xl{font-size:2rem}
@@ -1238,32 +1234,45 @@ body.menu-open .cta-bar{display:none}
   });
 
 
-  /* Para quem é: o título aparece grande e as informações entram uma a uma com a rolagem */
+  /* Para quem é: o título fica fixo na tela e as informações entram uma a uma com a rolagem */
   (function(){
     var pq = document.getElementById('para-quem'); if (!pq) return;
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var t = pq.querySelector('.pq-t'), list = pq.querySelector('.pq-items'), lis = [].slice.call(pq.querySelectorAll('.pq-items li')), stick = pq.querySelector('.pq-stick');
+    var t = pq.querySelector('.pq-t'), lis = [].slice.call(pq.querySelectorAll('.pq-items li')), stick = pq.querySelector('.pq-stick');
+    /* o título sempre cabe numa linha: usa o maior tamanho da escala que caiba na largura */
+    function fit(){
+      var sizes = window.innerWidth >= 768 ? [96, 80, 64, 56, 48] : [48, 40, 32, 24], avail = pq.clientWidth;
+      for (var i = 0; i < sizes.length; i++){ t.style.fontSize = sizes[i] + 'px'; if (t.scrollWidth <= avail) break; }
+    }
+    fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ fit(); setup(); });
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { window.addEventListener('resize', fit); return; }
     pq.classList.add('pq-anim');
-    var vis = false, raf = 0;
+    var vis = false, raf = 0, sh = 0;
+    function setup(){
+      fit();
+      sh = stick.offsetHeight;
+      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 68;
+      var top = Math.max(hh + 16, (window.innerHeight - sh) / 2 + hh / 2);
+      pq.style.setProperty('--pq-top', top + 'px');
+      pq.style.height = (sh + window.innerHeight * 1.2) + 'px';
+      kick();
+    }
     function cl(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
     function ease(v){ v = cl(v); return v * v * (3 - 2 * v); }
     function step(){
       raf = 0;
-      var r = pq.getBoundingClientRect(), total = pq.offsetHeight - stick.offsetHeight;
-      var p = cl(-r.top / total), e = ease(p / .28);
-      var h = stick.offsetHeight, lt = list.getBoundingClientRect().top - stick.getBoundingClientRect().top, up = Math.max(0, h * .5 - (lt - t.offsetHeight * .3 - 24));
-      t.style.transform = 'translate(-50%,-50%) translate3d(0,' + (-e * up).toFixed(1) + 'px,0) scale(' + (1 - e * .5).toFixed(3) + ')';
+      var r = pq.getBoundingClientRect(), total = pq.offsetHeight - sh, top = parseFloat(pq.style.getPropertyValue('--pq-top')) || 0;
+      var p = cl((top - r.top) / total);
       lis.forEach(function(li, i){
-        var a = ease((p - (.3 + i * .11)) / .12);
+        var a = ease((p - (.08 + i * .16)) / .16);
         li.style.opacity = a.toFixed(3);
-        li.style.transform = 'translate3d(0,' + ((1 - a) * 24).toFixed(1) + 'px,0) scale(' + (.9 + a * .1).toFixed(3) + ')';
+        li.style.transform = 'translate3d(0,' + ((1 - a) * 16).toFixed(1) + 'px,0) scale(' + (.92 + a * .08).toFixed(3) + ')';
       });
     }
     function kick(){ if (vis && !raf) raf = requestAnimationFrame(step); }
     new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pq);
     window.addEventListener('scroll', kick, {passive:true});
-    window.addEventListener('resize', kick);
-    step();
+    window.addEventListener('resize', setup);
+    setup(); vis = true; step();
   })();
 
   /* Como funciona: no celular, o detalhe de cada passo abre ao tocar */
