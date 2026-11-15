@@ -699,6 +699,25 @@ body.menu-open .cta-bar{display:none}
 .pq.pq-anim .pq-items li{opacity:0}
 @media (min-width:768px){.pq-t{font-size:6rem}.pq-items li{font-size:1.25rem;padding:8px 24px}}
 
+/* O que você encontra: faixas de tags em movimento contínuo */
+.porque-mq{margin:32px calc(50% - 50vw) 0;display:grid;gap:8px;overflow:hidden}
+.mq-row{overflow:hidden;-webkit-user-select:none;user-select:none}
+.mq-track{display:flex;width:max-content;animation:mq 40s linear infinite;animation-play-state:paused}
+.porque-mq.on .mq-track{animation-play-state:running}
+.mq-row.rev .mq-track{animation-direction:reverse;animation-duration:46s}
+.porque-mq.on .mq-row.held .mq-track{animation-play-state:paused}
+.mq-set{display:flex;gap:8px;padding-right:8px}
+.mq-chip{flex:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid #6c8ebf;border-radius:999px;padding:8px 16px;font-weight:700;font-stretch:105%;font-size:1rem;line-height:1.5;color:var(--azul-escuro);white-space:nowrap}
+.mq-chip svg{flex:none;width:16px;height:16px;fill:var(--laranja)}
+@keyframes mq{to{transform:translate3d(-50%,0,0)}}
+@media (prefers-reduced-motion:reduce){
+  .porque-mq{margin-inline:0}
+  .mq-row.rev{display:none}
+  .mq-track{animation:none;width:auto;justify-content:center}
+  .mq-set{flex-wrap:wrap;justify-content:center;padding:0}
+  .mq-set + .mq-set,.mq-set .mq-chip:nth-child(n+7){display:none}
+}
+
 /* Escala tipográfica (regra de 8px): 12 · 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64 · 72 · 80 · 96 */
 .t-xl{font-size:2rem}
 .t-l{font-size:2rem}
@@ -948,14 +967,11 @@ body.menu-open .cta-bar{display:none}
         <p class="porque-lead">Nós fazemos a curadoria. Você abre, experimenta e descobre no seu ritmo.</p>
       </div>
       <h3 class="t t-m rvt"><span class="lo">O que você encontra</span><span class="hi">no O Pack?</span></h3>
-      <ul class="porque-list" data-stagger>
-        <li>Curadoria para facilitar a escolha</li>
-        <li>Pilsens artesanais feitas em São Paulo</li>
-        <li>Cervejarias diferentes, cada uma com seu jeito de fazer Pilsen</li>
-        <li>Conteúdo para acompanhar cada rótulo</li>
-        <li>Seleções novas a cada ciclo</li>
-        <li>Nada de precisar entender de cerveja antes</li>
-      </ul>
+      <div class="porque-mq">
+        <ul class="sr-only"><li>Curadoria</li><li>Pilsens paulistas</li><li>Cervejarias diferentes</li><li>Conteúdo em cada Pack</li><li>Seleções novas</li><li>Zero complicação</li></ul>
+        <div class="mq-row" aria-hidden="true"><div class="mq-track"><div class="mq-set"><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span></div><div class="mq-set"><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span></div></div></div>
+        <div class="mq-row rev" aria-hidden="true"><div class="mq-track"><div class="mq-set"><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span></div><div class="mq-set"><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Conteúdo em cada Pack</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Zero complicação</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Pilsens paulistas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Seleções novas</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Curadoria</span><span class="mq-chip"><svg viewBox="0 0 116.97 116.97" aria-hidden="true"><use href="#tampa"/></svg>Cervejarias diferentes</span></div></div></div>
+      </div>
     </div>
   </section>
 
@@ -1356,6 +1372,17 @@ body.menu-open .cta-bar{display:none}
     }
     var t = null; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(balance, 200); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(balance); else balance();
+  })();
+
+  /* Faixas de tags: só andam quando estão na tela; param enquanto o dedo está em cima */
+  (function(){
+    var mq = document.querySelector('.porque-mq'); if (!mq) return;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ mq.classList.toggle('on', es[0].isIntersecting); }).observe(mq);
+    else mq.classList.add('on');
+    [].forEach.call(mq.querySelectorAll('.mq-row'), function(r){
+      r.addEventListener('pointerdown', function(){ r.classList.add('held'); });
+      ['pointerup','pointercancel','pointerleave'].forEach(function(ev){ r.addEventListener(ev, function(){ r.classList.remove('held'); }); });
+    });
   })();
 
   /* Como funciona: no celular, o detalhe de cada passo abre ao tocar */
