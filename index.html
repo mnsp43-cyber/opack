@@ -1394,10 +1394,11 @@ body.menu-open .cta-bar{display:none}
     }
     function step(){
       raf = 0;
-      var r = ul.getBoundingClientRect(), base = hh() + 16, h = ul.offsetHeight;
+      var r = ul.getBoundingClientRect(), base = hh() + 16, n = lis.length;
+      /* no fim da lista a pilha sobe inteira, sem comprimir as cartas */
+      var shift = Math.min(0, (r.bottom - hs[n - 1]) - (base + (n - 1) * PEEK));
       lis.forEach(function(li, i){
-        var nat = r.top + offs[i], y = Math.max(nat, base + i * PEEK);
-        y = Math.min(y, r.top + h - hs[i]);
+        var nat = r.top + offs[i], y = Math.max(nat, base + i * PEEK + shift);
         li.style.transform = y > nat ? 'translate3d(0,' + (y - nat).toFixed(1) + 'px,0)' : '';
       });
     }
