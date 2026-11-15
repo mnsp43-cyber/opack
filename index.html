@@ -615,6 +615,14 @@ svg[data-pk].walking{animation:none}
 @media (min-width:1024px){.fav-txt{font-size:1.25rem}}
 
 /* Melhorias pós-V4 */
+@media (max-width:759px){
+  .pilares{gap:24px;text-align:left;max-width:30rem;margin-inline:auto}
+  .pilar{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:16px;align-items:start}
+  .pilar > :first-child{grid-column:1;grid-row:1 / span 2}
+  .pilar .face{width:48px;height:48px;margin:0}
+  .pilar h3{grid-column:2;margin:0 0 4px}
+  .pilar p{grid-column:2;margin:0;max-width:none}
+}
 .ass-area{margin:16px 0 0;font-weight:700}
 .price .economia{display:table;margin-top:8px;padding:2px 8px;border-radius:999px;background:var(--laranja);color:var(--azul-escuro);font-weight:800;font-stretch:105%;line-height:1.5}
 .price .renova{display:block;margin-top:8px;font-weight:400;font-stretch:100%;line-height:1.4;opacity:.85}
