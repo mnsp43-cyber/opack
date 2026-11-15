@@ -700,15 +700,17 @@ body.menu-open .cta-bar{display:none}
 @media (min-width:768px){.pq-t{font-size:6rem}.pq-items li{font-size:1.25rem;padding:8px 24px}}
 
 /* O que você encontra: faixas de tags em movimento contínuo */
-.porque-mq{margin:32px calc(50% - 50vw) 0;display:grid;gap:8px;overflow:hidden}
-.mq-row{overflow:hidden;-webkit-user-select:none;user-select:none}
-.mq-track{display:flex;width:max-content;animation:mq 40s linear infinite;animation-play-state:paused}
+.porque-mq{margin:32px calc(50% - 50vw) 0;display:grid;gap:8px}
+.mq-row{overflow:hidden;padding:16px 0;margin:-16px 0;-webkit-user-select:none;user-select:none;touch-action:pan-y}
+.mq-track{display:flex;width:max-content;animation:mq 90s linear infinite;animation-play-state:paused}
 .porque-mq.on .mq-track{animation-play-state:running}
-.mq-row.rev .mq-track{animation-direction:reverse;animation-duration:46s}
+.mq-row.rev .mq-track{animation-direction:reverse;animation-duration:104s}
 .porque-mq.on .mq-row.held .mq-track{animation-play-state:paused}
 .mq-set{display:flex;gap:8px;padding-right:8px}
 .mq-chip{flex:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid #6c8ebf;border-radius:999px;padding:8px 16px;font-weight:700;font-stretch:105%;font-size:1rem;line-height:1.5;color:var(--azul-escuro);white-space:nowrap}
 .mq-chip svg{flex:none;width:16px;height:16px;fill:var(--laranja)}
+.mq-chip{background:var(--paper);cursor:grab;transition:transform .35s var(--rv-ease,ease),box-shadow .35s var(--rv-ease,ease)}
+.mq-chip.held{transform:translateY(-8px) scale(1.06) rotate(var(--tilt,-2deg));box-shadow:0 14px 24px -12px rgba(16,51,117,.55);position:relative;z-index:2;cursor:grabbing}
 @keyframes mq{to{transform:translate3d(-50%,0,0)}}
 @media (prefers-reduced-motion:reduce){
   .porque-mq{margin-inline:0}
@@ -1380,8 +1382,14 @@ body.menu-open .cta-bar{display:none}
     if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ mq.classList.toggle('on', es[0].isIntersecting); }).observe(mq);
     else mq.classList.add('on');
     [].forEach.call(mq.querySelectorAll('.mq-row'), function(r){
-      r.addEventListener('pointerdown', function(){ r.classList.add('held'); });
-      ['pointerup','pointercancel','pointerleave'].forEach(function(ev){ r.addEventListener(ev, function(){ r.classList.remove('held'); }); });
+      var chip = null;
+      r.addEventListener('pointerdown', function(e){
+        r.classList.add('held');
+        chip = e.target.closest('.mq-chip');
+        if (chip){ chip.style.setProperty('--tilt', (Math.random() < .5 ? -1 : 1) * (1.5 + Math.random() * 2) + 'deg'); chip.classList.add('held'); }
+      });
+      function up(){ r.classList.remove('held'); if (chip){ chip.classList.remove('held'); chip = null; } }
+      ['pointerup','pointercancel','pointerleave'].forEach(function(ev){ r.addEventListener(ev, up); });
     });
   })();
 
