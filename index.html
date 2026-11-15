@@ -810,6 +810,41 @@ svg[data-pk].walking{animation:none}
 .parc ul li div > span{margin-top:8px;font-size:.75rem;color:var(--azul-escuro);opacity:.85}
 .parc ul li .parc-desc{margin-top:8px;font-size:1rem;line-height:1.5;font-weight:400;color:var(--azul-escuro)}
 .parc ul::after{content:'';height:var(--pc-end,0px);margin-top:-16px}
+
+/* Grade de 8px: ajustes finos de espaçamento */
+.btn{padding:8px 24px;gap:8px}
+.hdr .btn{min-height:40px;padding:8px 16px}
+.sign .btn{padding:8px 24px;border-radius:16px}
+.plan-top{padding:24px}
+.plan-body{padding:24px;gap:16px}
+.plan-body ul{gap:8px}
+@media (max-width:359px){.plan-body .btn{padding-inline:16px}}
+.gate{padding:24px}
+.gate .row{gap:16px}
+.hero{padding-top:calc(var(--header-h) + 28px)}
+.steps{padding-bottom:40px}
+.step{padding-bottom:40px}
+@media (min-width:900px){.steps{padding-block:112px}.step{padding-bottom:0}}
+@media (min-width:1200px){.seis{padding-inline:144px}}
+.nav{gap:32px}
+.faq button{grid-template-columns:40px 1fr 40px}
+.faq .ans p,.faq .ans .dot-list,.faq .ans .flow{padding-left:48px}
+.t .lo{margin-top:8px}
+.hero .t.t-xl .lo{margin-top:8px}
+.br-card .br-u{margin-top:8px}
+.pilar h3{margin-bottom:8px}
+.step-card b{margin-bottom:8px}
+.ciclo-link,.em-breve a,.ft-links a,.ft-pop,.contato a{padding-block:8px}
+.price .economia{padding:8px}
+.dots{gap:8px}
+.pq-items li{padding:8px 16px}
+.flow span{padding:8px 16px}
+.modal-body{padding-right:16px}
+.cf-steps .dot-list{gap:8px}
+:focus-visible{border-radius:8px}
+.scroll-cue{border-radius:16px}
+.tile{border-radius:16px}
+.mag{border-radius:8px}
 </style>
 </head>
 <body>
@@ -1064,7 +1099,7 @@ svg[data-pk].walking{animation:none}
   <section class="sec white stack cover-prev" id="cervejarias">
     <div class="wrap">
       <div class="cerv-head">
-        <h2 class="t t-m rvt"><span class="lo" style="margin:0 0 .08em">Por trás de cada rótulo,</span><span class="hi">uma história.</span></h2>
+        <h2 class="t t-m rvt"><span class="lo" style="margin:0 0 8px">Por trás de cada rótulo,</span><span class="hi">uma história.</span></h2>
         <div class="lede rv">
           <p class="cerv-lead"><b class="brand">O Pack</b> reúne cervejas de cervejarias <span>de todo o estado de São Paulo.</span></p>
           <p>A cada edição, a gente apresenta cervejarias, cidades e histórias diferentes.</p>
