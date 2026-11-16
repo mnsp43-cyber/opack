@@ -856,6 +856,48 @@ svg[data-pk].walking{animation:none}
 .scroll-cue{border-radius:16px}
 .tile{border-radius:16px}
 .mag{border-radius:8px}
+
+/* Entrega: o caminho do pedido se desenha com a rolagem */
+.ent-route{position:relative;max-width:30rem;margin:32px auto 0}
+.ent-stops{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.ent-stop{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:16px;align-items:start;text-align:left}
+.ent-dot{width:24px;height:24px;border-radius:50%;border:3px solid #6c8ebf;background:var(--paper);position:relative;z-index:1;transition:background-color .3s,border-color .3s}
+.ent-stop h3{margin:0;font-size:1.25rem;line-height:24px;font-weight:800;font-stretch:112%;color:var(--azul-escuro)}
+.ent-when{display:inline-block;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--laranja);color:var(--azul-escuro);font-size:.75rem;line-height:24px;font-weight:700;font-stretch:100%;vertical-align:top}
+.ent-stop p{margin:8px 0 0;font-size:1rem;line-height:1.5;color:var(--ink-soft)}
+.ent-tags{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.ent-tags li{border:1.5px solid #6c8ebf;border-radius:999px;padding:0 8px;font-size:.75rem;line-height:24px;font-weight:700;color:var(--azul-escuro);white-space:nowrap}
+.ent-track{position:absolute;left:10.5px;top:12px;width:3px;height:calc(100% - 24px);background:#6c8ebf;border-radius:3px}
+.ent-fill{position:absolute;inset:0;background:var(--laranja);border-radius:3px;transform-origin:0 0}
+.ent-pk{display:none}
+.ent-close{margin:24px auto 0;max-width:24em;text-align:center;font-size:1rem;line-height:1.5;font-weight:600;color:var(--azul-escuro)}
+.ent-dot{background:var(--laranja);border-color:var(--laranja)}
+/* com animação */
+.ent-anim .ent-stick{position:sticky;top:var(--ent-top,var(--header-h))}
+.ent-anim .ent-fill{transform:scaleY(0)}
+.ent-anim .ent-dot{background:var(--paper);border-color:#6c8ebf}
+.ent-anim .ent-stop > div{opacity:.35;transform:translate3d(0,8px,0);transition:opacity .4s,transform .4s}
+.ent-anim .ent-stop.on .ent-dot{background:var(--laranja);border-color:var(--laranja)}
+.ent-anim .ent-stop.on > div{opacity:1;transform:none}
+.ent-anim .ent-tags li{opacity:0}
+.ent-anim .ent-close{opacity:0}
+.ent-anim .ent-pk{display:block;position:absolute;left:50%;top:0;width:40px;height:40px;margin:-20px 0 0 -20px;z-index:2;will-change:transform}
+.ent-pk .ent-face{display:block;width:100%;height:100%;overflow:visible}
+.ent-anim.ent-arrived .ent-pk .ent-face{animation:entHop .6s ease-out 1}
+@keyframes entHop{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}70%{transform:translateY(2px)}}
+@media (min-width:1024px){
+  .ent-route{max-width:none;margin-top:56px}
+  .ent-stops{flex-direction:row;gap:32px}
+  .ent-stop{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .ent-stop > div{margin-top:16px}
+  .ent-stop h3{font-size:1.5rem;line-height:32px}
+  .ent-when{display:table;margin:8px auto 0}
+  .ent-tags{justify-content:center}
+  .ent-track{left:12.5%;right:12.5%;top:10.5px;width:auto;height:3px}
+  .ent-anim .ent-fill{transform:scaleX(0)}
+  .ent-anim .ent-pk{top:50%;left:0}
+  .ent-close{margin-top:48px}
+}
 </style>
 </head>
 <body>
@@ -1149,15 +1191,23 @@ svg[data-pk].walking{animation:none}
   <!-- 9b. Entrega e acompanhamento -->
   <section class="sec stack" id="entrega">
     <div class="wrap">
-      <div class="ent-head">
-        <h2 class="t t-l rvt"><span class="hi">Do pedido</span><span class="lo">até a sua porta.</span></h2>
+      <div class="ent-pin">
+        <div class="ent-stick">
+          <div class="ent-head">
+            <h2 class="t t-l rvt"><span class="hi">Do pedido</span><span class="lo">até a sua porta.</span></h2>
+          </div>
+          <div class="ent-route">
+            <div class="ent-track" aria-hidden="true"><span class="ent-fill"></span><span class="ent-pk"><svg class="face ent-face" data-pk="face" viewBox="0 0 116.97 116.97" aria-hidden="true" style="--bk:5.4s;--bkd:-2.6s;--bw:10.5s;--bwd:-4s"><path fill="#f08119" d="M58.48,0l4.13,5.9c1.71,2.44,5.12,2.96,7.47,1.13l5.68-4.41,2.22,6.87c.92,2.84,4.02,4.33,6.81,3.28l6.73-2.54.1,7.23c.04,2.98,2.56,5.31,5.53,5.13l7.18-.44-2.03,6.94c-.83,2.85.88,5.83,3.77,6.53l7,1.71-3.98,6.04c-1.64,2.48-.87,5.82,1.68,7.35l6.19,3.7-5.58,4.59c-2.29,1.89-2.55,5.31-.56,7.52l4.83,5.37-6.67,2.74c-2.75,1.13-4,4.32-2.75,7.02l3.04,6.56-7.17.64c-2.96.27-5.1,2.95-4.7,5.9l.97,7.17-7.03-1.5c-2.91-.62-5.75,1.31-6.24,4.25l-1.17,7.13-6.27-3.51c-2.6-1.46-5.89-.44-7.22,2.23l-3.21,6.45-4.96-5.21c-2.06-2.16-5.5-2.16-7.56,0l-4.96,5.21-3.21-6.45c-1.33-2.67-4.62-3.68-7.22-2.23l-6.27,3.51-1.17-7.13c-.48-2.94-3.33-4.88-6.24-4.25l-7.03,1.5.97-7.17c.4-2.95-1.74-5.63-4.7-5.9l-7.17-.64,3.04-6.56c1.25-2.7,0-5.89-2.75-7.02l-6.67-2.74,4.83-5.37c1.99-2.21,1.73-5.63-.56-7.52l-5.58-4.59,6.19-3.7c2.55-1.53,3.31-4.87,1.68-7.35l-3.98-6.04,7-1.71c2.89-.7,4.61-3.68,3.77-6.53l-2.03-6.94,7.18.44c2.97.18,5.49-2.16,5.53-5.13l.1-7.23,6.73,2.54c2.79,1.05,5.89-.44,6.81-3.28l2.22-6.87,5.68,4.41c2.35,1.83,5.76,1.32,7.47-1.13l4.13-5.9Z"/><g class="brows" fill="#fff"><path d="M31.04,35.88c-.7,0-1.41-.22-2.01-.69-1.44-1.11-1.71-3.19-.6-4.63.88-1.15,5.7-6.88,13.8-6.58,6.68.23,10.88,4.51,12,5.81,1.19,1.38,1.04,3.46-.34,4.66-1.38,1.19-3.47,1.04-4.66-.34-.68-.79-3.23-3.38-7.24-3.53-5.05-.15-8.01,3.58-8.34,4.01-.65.84-1.63,1.29-2.62,1.29Z"/><path d="M74.73,40.35c-.46,0-.93-.02-1.4-.05-3.99-.27-7.94-1.77-11.12-4.21-1.45-1.11-1.72-3.18-.61-4.63,1.11-1.45,3.18-1.72,4.63-.61,1.25.96,3.9,2.61,7.55,2.86,3.32.23,5.93-.76,7.55-1.63,1.61-.86,3.61-.26,4.47,1.35.86,1.61.26,3.61-1.35,4.47-2.15,1.15-5.5,2.45-9.72,2.45Z"/></g><g class="eyes-b" fill="#fff"><path d="M74.86,72.68c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM74.86,49.29c-4.63,0-8.39,3.77-8.39,8.4s3.77,8.4,8.39,8.4,8.4-3.77,8.4-8.4-3.77-8.4-8.4-8.4Z"/><path d="M42.11,72.68c-8.27,0-15-6.73-15-15s6.73-15,15-15,15,6.73,15,15-6.73,15-15,15ZM42.11,49.29c-4.63,0-8.4,3.77-8.4,8.4s3.77,8.4,8.4,8.4,8.39-3.77,8.39-8.4-3.77-8.4-8.39-8.4Z"/></g></svg></span></div>
+            <ol class="ent-stops" aria-label="Etapas da entrega">
+              <li class="ent-stop"><span class="ent-dot" aria-hidden="true"></span><div><h3>Pagamento confirmado</h3><p>A gente começa a preparar seu Pack.</p></div></li>
+              <li class="ent-stop"><span class="ent-dot" aria-hidden="true"></span><div><h3>Em preparação <span class="ent-when">até 6 dias</span></h3><ul class="ent-tags"><li>Separa as cervejas</li><li>Monta o Pack</li><li>Confere tudo</li><li>Embala</li></ul></div></li>
+              <li class="ent-stop"><span class="ent-dot" aria-hidden="true"></span><div><h3>Enviado</h3><p>O prazo depende da transportadora. O frete é calculado pelo CEP, na compra.</p></div></li>
+              <li class="ent-stop"><span class="ent-dot" aria-hidden="true"></span><div><h3>Entregue</h3><p>Na sua porta, em São Paulo ou na Grande SP.</p></div></li>
+            </ol>
+          </div>
+          <p class="ent-close">Você acompanha cada etapa pelo site e por e-mail. E a ideia é chegar a mais lugares em breve.</p>
+        </div>
       </div>
-      <ol class="cf-steps cf-ent" data-stagger aria-label="Entrega">
-        <li><button type="button" class="cf-q" aria-expanded="false" aria-controls="cfe1" id="cfeq1"><span class="n" aria-hidden="true">1</span><h3>Onde entregamos?</h3><svg class="cf-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="cf-a" id="cfe1" role="region" aria-labelledby="cfeq1"><div><p>Por enquanto, a gente entrega em:</p><ul class="dot-list"><li>Cidade de São Paulo</li><li>Grande São Paulo</li></ul><p>E a ideia é chegar a mais lugares em breve.</p></div></div></li>
-        <li><button type="button" class="cf-q" aria-expanded="false" aria-controls="cfe2" id="cfeq2"><span class="n" aria-hidden="true">2</span><h3>Como funciona o frete?</h3><svg class="cf-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="cf-a" id="cfe2" role="region" aria-labelledby="cfeq2"><div><p>O frete é calculado pelo CEP, na hora da compra, e não está incluído no preço do Pack.</p></div></div></li>
-        <li><button type="button" class="cf-q" aria-expanded="false" aria-controls="cfe3" id="cfeq3"><span class="n" aria-hidden="true">3</span><h3>Prazo de preparação</h3><svg class="cf-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="cf-a" id="cfe3" role="region" aria-labelledby="cfeq3"><div><p>Depois que o pagamento é confirmado, o pedido leva até <strong>6 dias</strong> para ser preparado e enviado. Nesse tempo, a gente:</p><ul class="dot-list"><li>Separa as cervejas</li><li>Monta o Pack</li><li>Confere tudo</li><li>Embala</li><li>Prepara para a coleta ou postagem</li></ul><p>Depois do envio, o prazo depende da transportadora e da modalidade escolhida.</p></div></div></li>
-        <li><button type="button" class="cf-q" aria-expanded="false" aria-controls="cfe4" id="cfeq4"><span class="n" aria-hidden="true">4</span><h3>Acompanhe seu pedido</h3><svg class="cf-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="cf-a" id="cfe4" role="region" aria-labelledby="cfeq4"><div><p>Você acompanha cada etapa pelo site e por e-mail:</p><ol class="flow"><li><span>Pedido confirmado</span></li><li><span>Em preparação</span></li><li><span>Enviado</span></li><li><span>Entregue</span></li></ol></div></div></li>
-      </ol>
     </div>
   </section>
 
@@ -1379,6 +1429,72 @@ svg[data-pk].walking{animation:none}
     new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pq);
     window.addEventListener('scroll', kick, {passive:true});
     window.addEventListener('resize', setup);
+    setup(); vis = true; step();
+  })();
+
+  /* Entrega: a seção fica fixa e o caminho do pedido se desenha com a rolagem; o Packinho percorre a linha e cada etapa acende */
+  (function(){
+    var pin = document.querySelector('#entrega .ent-pin'); if (!pin) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var sec = document.getElementById('entrega'), stick = pin.querySelector('.ent-stick'), route = pin.querySelector('.ent-route');
+    var track = pin.querySelector('.ent-track'), fill = pin.querySelector('.ent-fill'), pk = pin.querySelector('.ent-pk');
+    var stops = [].slice.call(pin.querySelectorAll('.ent-stop')), dots = stops.map(function(s){ return s.querySelector('.ent-dot'); });
+    var tags = [].slice.call(pin.querySelectorAll('.ent-tags li')), close = pin.querySelector('.ent-close');
+    sec.classList.add('ent-anim');
+    var raf = 0, vis = false, sh = 0, horiz = false, pos = [], len = 1, pinned = true, arrived = false;
+    function cl(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function ease(v){ v = cl(v); return v * v * (3 - 2 * v); }
+    function setup(){
+      pin.style.height = '';
+      var rr = route.getBoundingClientRect();
+      var c = dots.map(function(d){ var r = d.getBoundingClientRect(); return {x: r.left + r.width / 2 - rr.left, y: r.top + r.height / 2 - rr.top}; });
+      horiz = Math.abs(c[c.length - 1].y - c[0].y) < 4;
+      if (horiz){
+        track.style.left = c[0].x + 'px'; track.style.right = 'auto'; track.style.width = (c[c.length - 1].x - c[0].x) + 'px';
+        track.style.top = (c[0].y - 1.5) + 'px'; track.style.height = '3px';
+        pos = c.map(function(p){ return p.x - c[0].x; });
+      } else {
+        track.style.top = c[0].y + 'px'; track.style.height = (c[c.length - 1].y - c[0].y) + 'px';
+        track.style.left = (c[0].x - 1.5) + 'px'; track.style.width = '3px';
+        pos = c.map(function(p){ return p.y - c[0].y; });
+      }
+      len = pos[pos.length - 1] || 1;
+      sh = stick.offsetHeight;
+      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 68;
+      var room = window.innerHeight - hh - 16;
+      pinned = sh <= room;
+      var top = Math.max(hh + 16, (window.innerHeight - sh) / 2 + hh / 2);
+      sec.style.setProperty('--ent-top', top + 'px');
+      stick.style.position = pinned ? '' : 'static';
+      pin.style.height = pinned ? (sh + window.innerHeight * 1.6) + 'px' : '';
+      kick();
+    }
+    function step(){
+      raf = 0;
+      var r = pin.getBoundingClientRect(), p;
+      if (pinned){
+        var top = parseFloat(sec.style.getPropertyValue('--ent-top')) || 0;
+        p = cl((top - r.top) / (pin.offsetHeight - sh));
+      } else {
+        var rr = route.getBoundingClientRect();
+        p = cl((window.innerHeight * .75 - rr.top) / (rr.height + 80)) * .9 + .1 * cl((window.innerHeight * .75 - rr.bottom) / 120);
+      }
+      var f = cl((p - .06) / .8), d = f * len;
+      fill.style.transform = horiz ? 'scaleX(' + f.toFixed(4) + ')' : 'scaleY(' + f.toFixed(4) + ')';
+      pk.style.transform = horiz ? 'translate3d(' + d.toFixed(1) + 'px,0,0)' : 'translate3d(0,' + d.toFixed(1) + 'px,0)';
+      stops.forEach(function(s, i){ s.classList.toggle('on', d >= pos[i] - 2); });
+      var seg = pos[2] - pos[1] || 1, sp = (d - pos[1]) / seg;
+      tags.forEach(function(t, k){ var a = ease((sp - k * .2) / .2); t.style.opacity = a.toFixed(3); t.style.transform = 'translate3d(0,' + ((1 - a) * 8).toFixed(1) + 'px,0)'; });
+      close.style.opacity = ease((p - .88) / .08).toFixed(3);
+      var now = f >= .999;
+      if (now !== arrived){ arrived = now; sec.classList.toggle('ent-arrived', now); }
+    }
+    function kick(){ if (vis && !raf) raf = requestAnimationFrame(step); }
+    new IntersectionObserver(function(es){ vis = es[0].isIntersecting; kick(); }, {rootMargin:'100px 0px'}).observe(pin);
+    window.addEventListener('scroll', kick, {passive:true});
+    window.addEventListener('resize', setup);
+    window.addEventListener('load', setup);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setup);
     setup(); vis = true; step();
   })();
 
