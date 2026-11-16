@@ -214,12 +214,17 @@ body.menu-open::before{background:var(--azul-escuro)}
 .pilar p{margin:0 auto;max-width:17em;color:var(--ink-soft)}
 .pilar .face{display:block;width:64px;height:64px;margin:0 auto 16px;overflow:visible}
 .face-wrap{display:flex;justify-content:center}
-.face-sep{display:block;width:48px;height:48px;margin:64px auto 16px;overflow:visible}
+/* Carinhas: margens compensam o espaço interno de cada título para a distância vista ficar em 64px acima e 16px abaixo */
+.face-sep{display:block;width:48px;height:48px;margin:62px auto 15px;overflow:visible}
+@media (min-width:1024px){.face-sep{margin-top:61px}}
 .face-wrap + .tag-eyebrow.tag-hi{margin-top:0}
 .porque .face-wrap + .t{margin-top:0}
-.porque .face-sep{margin-bottom:12px}
-.ass-pick .face-sep{margin-top:-52px;margin-bottom:46px}
-@media (min-width:600px){.ass-pick .face-sep{margin-top:-64px;margin-bottom:59px}}
+.porque .face-sep{margin-bottom:11px}
+@media (min-width:600px){.porque .face-sep{margin-bottom:12px}}
+@media (min-width:1024px){.porque .face-sep{margin-bottom:13px}}
+.ass-pick .face-sep{margin-top:-54px;margin-bottom:45px}
+@media (min-width:600px){.ass-pick .face-sep{margin-top:-66px;margin-bottom:57px}}
+@media (min-width:1024px){.ass-pick .face-sep{margin-bottom:58px}}
 
 
 /* Scrollytelling */
