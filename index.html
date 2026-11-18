@@ -936,6 +936,11 @@ svg[data-pk].walking{animation:none}
 .mag-spread .base-l .pn,.mag-spread .face-b .pn{left:16px}
 .mag-spread .base-r .pn,.mag-spread .face-f .pn{right:16px}
 @media (prefers-reduced-motion:reduce){.mag-spread .leaf{transition:none}}
+
+/* Capa da revista: ao tocar, levanta e inclina como as fotos do carrossel; acompanha o dedo de lado */
+.mag-cover{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;transform:translate3d(var(--cx,0px),0,0) translateY(var(--lift,0px)) scale(var(--sc,1)) rotate(var(--rot,-4deg))}
+.mag-cover.held{--lift:-14px;--sc:1.05;cursor:grabbing;box-shadow:0 32px 48px -20px rgba(16,51,117,.6);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.mag-cover.moving{transition:box-shadow .25s}
 </style>
 </head>
 <body>
@@ -1551,6 +1556,41 @@ svg[data-pk].walking{animation:none}
       if (e.key === 'ArrowRight'){ e.preventDefault(); go(1); }
       else if (e.key === 'ArrowLeft'){ e.preventDefault(); go(-1); }
     });
+  })();
+
+  /* Capa da revista: segura e levanta com inclinação; arrastando de lado ela acompanha e balança, ao soltar volta */
+  (function(){
+    var c = document.querySelector('.mag-cover'); if (!c) return;
+    var down = false, sx = 0, sy = 0, lx = 0, tilt = -4, base = -4, axis = null;
+    function release(){
+      if (!down) return; down = false; axis = null;
+      c.classList.remove('held', 'moving');
+      c.style.setProperty('--cx', '0px'); c.style.setProperty('--rot', base + 'deg');
+    }
+    c.addEventListener('pointerdown', function(e){
+      down = true; sx = lx = e.clientX; sy = e.clientY; axis = null;
+      tilt = base + (Math.random() < .5 ? -1 : 1) * (1.5 + Math.random() * 2);
+      c.style.setProperty('--rot', tilt.toFixed(2) + 'deg');
+      c.classList.add('held');
+    });
+    c.addEventListener('pointermove', function(e){
+      if (!down) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      if (axis === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (axis === 'y') { release(); return; }
+        try { c.setPointerCapture(e.pointerId); } catch(_){}
+        c.classList.add('moving');
+      }
+      if (axis !== 'x') return;
+      var v = e.clientX - lx; lx = e.clientX;
+      var off = Math.max(-48, Math.min(48, dx * .5));
+      tilt = tilt * .8 + (base + Math.max(-8, Math.min(8, v * .8))) * .2;
+      c.style.setProperty('--cx', off.toFixed(1) + 'px');
+      c.style.setProperty('--rot', tilt.toFixed(2) + 'deg');
+    });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function(ev){ c.addEventListener(ev, release); });
+    c.addEventListener('pointerleave', function(){ if (axis !== 'x') release(); });
   })();
 
   /* Brindes: com a rolagem, a segunda carta sobe e para por cima da primeira, deixando o topo dela à mostra */
