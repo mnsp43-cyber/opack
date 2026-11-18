@@ -279,13 +279,13 @@ body.menu-open::before{background:var(--azul-escuro)}
 .mag-cover .ttl{font-weight:900;font-stretch:122%;color:var(--laranja);line-height:.95}
 .mag-cover .ed{font-weight:300;font-stretch:80%;font-size:1rem}
 .mag-cover .tp-deco{position:absolute;width:90%;right:-30%;bottom:-18%;color:var(--azul-medio)}
-.mag-spread{width:min(420px,88vw);aspect-ratio:3/2;display:grid;grid-template-columns:1fr 1fr;background:#dde4ed;overflow:hidden;transform:rotate(3deg)}
-.mag-spread .pg{padding:16px;display:flex;flex-direction:column;gap:8px}
-.mag-spread .pg + .pg{background:var(--laranja);color:var(--azul-escuro)}
-.mag-spread .k{font-weight:900;font-stretch:118%;line-height:1;color:var(--azul-escuro)}
-.mag-spread .ln{height:6px;border-radius:3px;background:var(--azul-claro)}
-.mag-spread .pg + .pg .ln{background:#dde4ed}
-.mag-spread .bt{margin-top:auto;width:42%;aspect-ratio:1;align-self:flex-end;color:var(--azul-escuro)}
+
+
+
+
+
+
+
 .mags-note{text-align:center;color:var(--ink-soft);margin-top:24px}
 @media (min-width:768px){.mags{gap:40px}}
 .rev .lede{margin:64px auto 0;text-align:center}
@@ -898,6 +898,44 @@ svg[data-pk].walking{animation:none}
   .ent-anim .ent-pk{top:50%;left:0}
   .ent-close{margin-top:48px}
 }
+
+/* Revista: 8 páginas que viram com toque (direita avança, esquerda volta) */
+.mag-spread{position:relative;width:min(420px,88vw);aspect-ratio:3/2;display:grid;grid-template-columns:1fr 1fr;background:#dde4ed;overflow:hidden;transform:rotate(3deg);cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.mag-spread:focus-visible{box-shadow:0 0 0 3px var(--laranja),0 24px 48px -20px rgba(16,51,117,.45)}
+.mag-spread .base-l{grid-column:1}.mag-spread .base-r{grid-column:2}
+.mag-spread .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1)}
+.mag-spread .leaf.flip{transform:perspective(1400px) rotateY(-180deg)}
+.mag-spread .face-f,.mag-spread .face-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.mag-spread .face-b{transform:rotateY(180deg)}
+.mag-spread .face-f .pg{box-shadow:inset 8px 0 12px -10px rgba(16,51,117,.45)}
+.mag-spread .face-b .pg{box-shadow:inset -8px 0 12px -10px rgba(16,51,117,.45)}
+.mag-spread .base-l .pg{box-shadow:inset -8px 0 12px -10px rgba(16,51,117,.45)}
+.mag-spread .base-r .pg{box-shadow:inset 8px 0 12px -10px rgba(16,51,117,.45)}
+.mag-spread .pg{position:relative;height:100%;padding:16px;display:flex;flex-direction:column;gap:8px;background:#dde4ed;color:var(--azul-escuro);overflow:hidden}
+.mag-spread .pg.or{background:var(--laranja)}
+.mag-spread .pg.nv{background:var(--azul-escuro);color:#dde4ed}
+.mag-spread .pg.ac{background:#6c8ebf}
+.mag-spread .k{font-weight:900;font-stretch:118%;line-height:1;color:inherit}
+.mag-spread .pg.nv .k{color:var(--laranja)}
+.mag-spread .ey{font-size:.75rem;line-height:1.3;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.mag-spread .pg.nv .ey{color:#dde4ed}
+.mag-spread .ln{display:block;height:6px;border-radius:3px;background:#6c8ebf;flex:none}
+.mag-spread .pg.or .ln,.mag-spread .pg.ac .ln{background:#dde4ed}
+.mag-spread .pg.nv .ln{background:#6c8ebf}
+.mag-spread .big{font-weight:900;font-stretch:125%;font-size:2.5rem;line-height:1;color:var(--laranja)}
+.mag-spread .row{display:flex;justify-content:space-between;gap:8px;font-size:.75rem;line-height:1.3;border-bottom:1.5px solid rgba(16,51,117,.35);padding-bottom:8px}
+.mag-spread .row i{font-style:normal;font-weight:700}
+.mag-spread .dots{display:flex;gap:8px;color:var(--laranja)}
+.mag-spread .dots .tp{width:24px;height:24px}
+.mag-spread .q{font-weight:900;font-size:3rem;line-height:.6;height:24px;color:var(--azul-escuro)}
+.mag-spread .bt{margin-top:auto;width:42%;align-self:flex-end;color:var(--azul-escuro)}
+.mag-spread .pg.nv .bt{color:var(--laranja)}
+.mag-spread .bt .tp,.mag-spread .deco .tp{display:block;width:100%;height:auto}
+.mag-spread .deco{position:absolute;width:64%;right:-18%;bottom:-18%;color:var(--laranja)}
+.mag-spread .pn{position:absolute;bottom:8px;font-size:.75rem;line-height:1;font-weight:700;opacity:.7}
+.mag-spread .base-l .pn,.mag-spread .face-b .pn{left:16px}
+.mag-spread .base-r .pn,.mag-spread .face-f .pn{right:16px}
+@media (prefers-reduced-motion:reduce){.mag-spread .leaf{transition:none}}
 </style>
 </head>
 <body>
@@ -1085,9 +1123,8 @@ svg[data-pk].walking{animation:none}
           <span class="ed">Edição <span class="ph">[01]</span></span>
           <span class="ttl" style="position:relative">Antes do primeiro gole</span>
         </div>
-        <div class="mag mag-spread">
-          <div class="pg"><span class="k">Cervejaria <span class="ph">[nome]</span></span><span class="ln"></span><span class="ln" style="width:85%"></span><span class="ln" style="width:92%"></span><span class="ln" style="width:60%"></span></div>
-          <div class="pg"><span class="k">E o que aparece no aroma?</span><span class="ln"></span><span class="ln" style="width:70%"></span><svg class="bt" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg></div>
+<div class="mag mag-spread" tabindex="0" role="group" aria-roledescription="revista" aria-label="Páginas da revista. Toque na página da direita para avançar e na da esquerda para voltar.">
+          <div class="base-l"><div class="pg "><span class="ey">[Cidade], SP</span><span class="k">Cervejaria <span class="ph">[nome]</span></span><span class="ln" style="width:100%"></span><span class="ln" style="width:85%"></span><span class="ln" style="width:92%"></span><span class="ln" style="width:60%"></span><span class="pn">1</span></div></div><div class="base-r"><div class="pg "><span class="k">Até a próxima edição</span><span class="ey">Edição <span class="ph">[02]</span></span><span class="deco"><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg></span><span class="pn">8</span></div></div><div class="leaf" style="z-index:10"><div class="face-f"><div class="pg or"><span class="k">E o que aparece no aroma?</span><span class="ln" style="width:100%"></span><span class="ln" style="width:70%"></span><span class="bt"><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg></span><span class="pn">2</span></div></div><div class="face-b"><div class="pg nv"><span class="ey">Rótulo</span><span class="big">01</span><span class="ln" style="width:100%"></span><span class="ln" style="width:80%"></span><span class="ln" style="width:55%"></span><span class="pn">3</span></div></div></div><div class="leaf" style="z-index:9"><div class="face-f"><div class="pg ac"><span class="k">Ficha técnica</span><span class="row"><b>Estilo</b><i>Pilsen</i></span><span class="row"><b>Teor</b><i class="ph">[x]%</i></span><span class="row"><b>IBU</b><i class="ph">[xx]</i></span><span class="pn">4</span></div></div><div class="face-b"><div class="pg "><span class="k">Harmoniza com</span><span class="dots"><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg></span><span class="ln" style="width:100%"></span><span class="ln" style="width:75%"></span><span class="ln" style="width:88%"></span><span class="pn">5</span></div></div></div><div class="leaf" style="z-index:8"><div class="face-f"><div class="pg or"><span class="q">“</span><span class="k">Curiosidade</span><span class="ln" style="width:100%"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:65%"></span><span class="pn">6</span></div></div><div class="face-b"><div class="pg nv"><span class="k">A história por trás</span><span class="ln" style="width:100%"></span><span class="ln" style="width:92%"></span><span class="ln" style="width:80%"></span><span class="ln" style="width:50%"></span><span class="bt"><svg class="tp" viewBox="0 0 116.97 116.97" fill="currentColor" aria-hidden="true"><use href="#tampa"/></svg></span><span class="pn">7</span></div></div></div>
         </div>
       </div>
       <div class="lede rv">
@@ -1495,6 +1532,25 @@ svg[data-pk].walking{animation:none}
     window.addEventListener('load', setup);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setup);
     setup(); vis = true; step();
+  })();
+
+  /* Revista: toque na página da direita vira para a próxima, na da esquerda volta */
+  (function(){
+    var sp = document.querySelector('.mag-spread'); if (!sp) return;
+    var leaves = [].slice.call(sp.querySelectorAll('.leaf')), n = 0, busy = 0;
+    function z(){ leaves.forEach(function(l, i){ l.style.zIndex = l.classList.contains('flip') ? 20 + i : 10 - i; }); }
+    function go(dir){
+      if (dir > 0 && n < leaves.length){ var l = leaves[n]; l.style.zIndex = 40; l.classList.add('flip'); n++; clearTimeout(busy); busy = setTimeout(z, 820); }
+      else if (dir < 0 && n > 0){ n--; var b = leaves[n]; b.style.zIndex = 40; b.classList.remove('flip'); clearTimeout(busy); busy = setTimeout(z, 820); }
+    }
+    sp.addEventListener('click', function(e){
+      var r = sp.getBoundingClientRect();
+      go(e.clientX >= r.left + r.width / 2 ? 1 : -1);
+    });
+    sp.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight'){ e.preventDefault(); go(1); }
+      else if (e.key === 'ArrowLeft'){ e.preventDefault(); go(-1); }
+    });
   })();
 
   /* Brindes: com a rolagem, a segunda carta sobe e para por cima da primeira, deixando o topo dela à mostra */
