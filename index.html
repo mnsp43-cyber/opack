@@ -1005,6 +1005,12 @@ svg[data-pk].walking{animation:none}
   .mag-spread .pg-more p{font-size:1rem}
   .mag-spread .pg-more .pg-btn{font-size:1rem;min-height:40px;padding:8px 24px}
 }
+
+/* Revista: lombada no meio (vinco + sombra) para separar as páginas */
+.mag-spread::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:56px;margin-left:-28px;z-index:60;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.14) 28%,rgba(0,0,0,.45) 47%,rgba(0,0,0,.6) 49.5%,rgba(255,255,255,.35) 50%,rgba(0,0,0,.55) 50.6%,rgba(0,0,0,.4) 53%,rgba(0,0,0,.12) 72%,rgba(0,0,0,0) 100%)}
+.mag-spread::before{content:'';position:absolute;inset:0;z-index:59;pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,.06) 0%,rgba(0,0,0,0) 8%,rgba(0,0,0,0) 92%,rgba(255,255,255,.06) 100%)}
 </style>
 </head>
 <body>
