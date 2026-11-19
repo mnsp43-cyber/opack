@@ -949,6 +949,36 @@ svg[data-pk].walking{animation:none}
   .parc ul li{position:relative!important;top:auto!important;margin-top:0!important;margin-bottom:0!important;box-shadow:none!important}
   .parc ul::after{display:none}
 }
+
+/* Desktop: escala tipográfica enxuta (12/16/20/24/32/40/56/80) e parágrafos principais em 20px */
+@media (min-width:1024px){
+  .menu nav a{font-size:2rem}
+  .hero .t.t-xl{font-size:5rem}
+  .hero .t.t-xl .lo{font-size:3.5rem}
+  .impacto .a{font-size:3.5rem}
+  .impacto .b{font-size:5rem}
+  .pq-t{font-size:5rem}
+  .faq-head h2{font-size:3.5rem}
+  .br-card b{font-size:3.5rem}
+  .mag-spread .q{font-size:2.5rem}
+  .lede p:not(.cerv-lead),.br-sub,.ciclo > p,.ass-pick .sub,.ass-pick .ass-area,.faq-head p{font-size:1.25rem}
+}
+
+/* Desktop: rodapé com Navegação e Institucional lado a lado */
+@media (min-width:860px){
+  .ft-grid{grid-template-columns:1.1fr 1fr 1fr}
+  .ft-cols{grid-column:2 / span 2;display:grid;grid-template-columns:1fr 1fr;column-gap:40px;grid-template-rows:auto 1fr;align-content:start}
+  .ft-cols > .ft-h{grid-row:1}
+  .ft-cols > .ft-links{grid-column:1;grid-row:2;align-self:start}
+  .ft-cols > .ft-h2{grid-column:2;margin-top:0 !important}
+  .ft-cols > .ft-legal{grid-column:2;grid-row:2;align-self:start}
+}
+/* Desktop: Packinho maior nas cervejarias e aviso centralizado com os cards */
+@media (min-width:1024px){
+  .parc .pk{width:160px}
+  .parc h3{padding-right:184px}
+  .parc-note{padding-right:184px}
+}
 </style>
 </head>
 <body>
@@ -1296,7 +1326,7 @@ svg[data-pk].walking{animation:none}
         <p class="t"><span class="hi">Descubra São Paulo</span><span class="lo">através da cerveja.</span></p>
         <p class="ft-desc">Uma seleção de Pilsens artesanais paulistas para você conhecer novos rótulos, descobrir cervejarias e encontrar seus próximos favoritos.</p>
       </div>
-      <div>
+      <div class="ft-cols">
         <h3 class="ft-h">Navegação</h3>
         <nav class="ft-links" data-stagger aria-label="Navegação">
           <a href="#o-que-e">O que é O Pack</a><a href="#o-que-vem">O que vem no Pack</a>
@@ -1305,7 +1335,7 @@ svg[data-pk].walking{animation:none}
           <a href="#cervejarias">Cervejarias</a><a href="#entrega">Entrega e acompanhamento</a>
           <a href="#duvidas">Dúvidas frequentes</a>
         </nav>
-        <h3 class="ft-h" style="margin-top:24px">Institucional</h3>
+        <h3 class="ft-h ft-h2" style="margin-top:24px">Institucional</h3>
         <div class="ft-legal" data-stagger>
           <a href="#" role="button" class="ft-pop" data-modal="sobre">Sobre O Pack</a><a href="#" role="button" class="ft-pop" data-modal="privacidade">Política de Privacidade</a><a href="#" role="button" class="ft-pop" data-modal="termos">Termos de Uso</a><a href="#" role="button" class="ft-pop" data-modal="entrega">Política de Entrega</a><a href="#" role="button" class="ft-pop" data-modal="cancelamento">Política de Cancelamento</a>
         </div>
@@ -1446,7 +1476,7 @@ svg[data-pk].walking{animation:none}
     var t = pq.querySelector('.pq-t'), lis = [].slice.call(pq.querySelectorAll('.pq-items li')), stick = pq.querySelector('.pq-stick');
     /* o título sempre cabe numa linha: usa o maior tamanho da escala que caiba na largura */
     function fit(){
-      var sizes = window.innerWidth >= 768 ? [96, 80, 64, 56, 48] : [48, 40, 32, 24], avail = pq.clientWidth;
+      var sizes = window.innerWidth >= 1024 ? [80, 56, 40] : window.innerWidth >= 768 ? [96, 80, 64, 56, 48] : [48, 40, 32, 24], avail = pq.clientWidth;
       for (var i = 0; i < sizes.length; i++){ t.style.fontSize = sizes[i] + 'px'; if (t.scrollWidth <= avail) break; }
     }
     fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ fit(); setup(); });
@@ -1773,6 +1803,7 @@ svg[data-pk].walking{animation:none}
 
   /* Scroll: header, rotação das tampinhas, parallax */
   var pars = [].slice.call(document.querySelectorAll('[data-px]')), ticking = false, PX = .1;
+  function pxK(){ PX = window.innerWidth >= 1024 ? .16 : .1; } pxK(); window.addEventListener('resize', pxK);
   var scrubs = [];
   var seals = [].slice.call(document.querySelectorAll('.seal')), prog = document.querySelector('.progress');
   window.addEventListener('resize', function(){ requestAnimationFrame(onScroll); });
