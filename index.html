@@ -903,10 +903,13 @@ svg[data-pk].walking{animation:none}
 .mag-spread{position:relative;width:min(420px,88vw);aspect-ratio:3/2;display:grid;grid-template-columns:1fr 1fr;background:#dde4ed;overflow:hidden;transform:rotate(3deg);cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
 .mag-spread:focus-visible{box-shadow:0 0 0 3px var(--laranja),0 24px 48px -20px rgba(16,51,117,.45)}
 .mag-spread .base-l{grid-column:1}.mag-spread .base-r{grid-column:2}
-.mag-spread .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1)}
+.mag-spread .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0deg);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1);visibility:hidden}
+.mag-spread .leaf.vis{visibility:visible}
+.mag-spread .leaf.rest:not(.flip){transform:none}
 .mag-spread .leaf.flip{transform:perspective(1400px) rotateY(-180deg)}
 .mag-spread .face-f,.mag-spread .face-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.mag-spread .face-b{transform:rotateY(180deg)}
+.mag-spread .face-b{transform:rotateY(180deg);-webkit-transform:rotateY(180deg)}
+.mag-spread{clip-path:inset(0 round 8px);-webkit-clip-path:inset(0 round 8px);isolation:isolate}
 .mag-spread .face-f .pg{box-shadow:inset 8px 0 12px -10px rgba(16,51,117,.45)}
 .mag-spread .face-b .pg{box-shadow:inset -8px 0 12px -10px rgba(16,51,117,.45)}
 .mag-spread .base-l .pg{box-shadow:inset -8px 0 12px -10px rgba(16,51,117,.45)}
@@ -1609,11 +1612,20 @@ svg[data-pk].walking{animation:none}
   (function(){
     var sp = document.querySelector('.mag-spread'); if (!sp) return;
     var leaves = [].slice.call(sp.querySelectorAll('.leaf')), n = 0, busy = 0;
-    function z(){ leaves.forEach(function(l, i){ l.style.zIndex = l.classList.contains('flip') ? 20 + i : 10 - i; }); }
+    /* só as folhas vizinhas ficam visíveis; em repouso sem 3D (evita vazamentos no Safari) */
+    function vis(){ leaves.forEach(function(l, i){ l.classList.toggle('vis', i >= n - 1 && i <= n + 1); }); }
+    function z(){ leaves.forEach(function(l, i){ l.style.zIndex = l.classList.contains('flip') ? 20 + i : 10 - i; l.classList.add('rest'); }); vis(); }
     function go(dir){
-      if (dir > 0 && n < leaves.length){ var l = leaves[n]; l.style.zIndex = 40; l.classList.add('flip'); n++; clearTimeout(busy); busy = setTimeout(z, 820); }
-      else if (dir < 0 && n > 0){ n--; var b = leaves[n]; b.style.zIndex = 40; b.classList.remove('flip'); clearTimeout(busy); busy = setTimeout(z, 820); }
+      var l;
+      if (dir > 0 && n < leaves.length){ l = leaves[n]; n++; }
+      else if (dir < 0 && n > 0){ n--; l = leaves[n]; }
+      else return;
+      vis(); l.classList.add('vis'); l.style.zIndex = 40;
+      l.classList.remove('rest'); void l.offsetWidth;
+      if (dir > 0) l.classList.add('flip'); else l.classList.remove('flip');
+      clearTimeout(busy); busy = setTimeout(z, 820);
     }
+    z();
     sp.addEventListener('click', function(e){
       if (e.target.closest('a')) return;
       var r = sp.getBoundingClientRect();
