@@ -941,6 +941,14 @@ svg[data-pk].walking{animation:none}
 .mag-cover{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;transform:translate3d(var(--cx,0px),0,0) translateY(var(--lift,0px)) scale(var(--sc,1)) rotate(var(--rot,-4deg))}
 .mag-cover.held{--lift:-14px;--sc:1.05;cursor:grabbing;box-shadow:0 32px 48px -20px rgba(16,51,117,.6);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
 .mag-cover.moving{transition:box-shadow .25s}
+
+/* Cervejarias no desktop: lista simples (sem pilha) e foto acompanhando a altura da coluna dos cards */
+@media (min-width:900px){
+  .cerv-grid{align-items:stretch}
+  .cerv-photo{aspect-ratio:auto;height:100%;min-height:400px}
+  .parc ul li{position:relative!important;top:auto!important;margin-top:0!important;margin-bottom:0!important;box-shadow:none!important}
+  .parc ul::after{display:none}
+}
 </style>
 </head>
 <body>
@@ -1638,6 +1646,7 @@ svg[data-pk].walking{animation:none}
     function fit(){
       ul.style.setProperty('--pc-end', '0px');
       lis.forEach(function(li){ li.style.marginBottom = ''; li.style.marginTop = ''; });
+      if (window.matchMedia('(min-width:900px)').matches) return;
       var n = lis.length, hs = lis.map(function(li){ return li.offsetHeight; }), hl = hs[n - 1];
       lis.forEach(function(li, i){
         if (i === n - 1) return;
