@@ -1014,6 +1014,11 @@ svg[data-pk].walking{animation:none}
   background:linear-gradient(90deg,rgba(16,51,117,0) 0%,rgba(16,51,117,.08) 30%,rgba(16,51,117,.22) 48%,rgba(255,255,255,.22) 50%,rgba(16,51,117,.2) 52%,rgba(16,51,117,.07) 70%,rgba(16,51,117,0) 100%);mix-blend-mode:multiply}
 .mag-spread::before{content:'';position:absolute;inset:0;z-index:59;pointer-events:none;
   background:linear-gradient(90deg,rgba(255,255,255,.06) 0%,rgba(0,0,0,0) 8%,rgba(0,0,0,0) 92%,rgba(255,255,255,.06) 100%)}
+
+/* Impacto: véu azul no canto do "para começar." para o laranja ter contraste sobre a foto */
+.impacto-in::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top left,rgba(16,51,117,.82) 0%,rgba(16,51,117,.55) 28%,rgba(16,51,117,0) 58%)}
+.impacto .a,.impacto .b{z-index:2}
+.impacto .b{text-shadow:0 2px 12px rgba(16,51,117,.55)}
 </style>
 </head>
 <body>
