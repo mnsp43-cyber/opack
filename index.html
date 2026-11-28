@@ -902,9 +902,11 @@ svg[data-pk].walking{animation:none}
 /* Revista: 8 páginas que viram com toque (direita avança, esquerda volta) */
 .mag-spread{position:relative;width:min(420px,88vw);aspect-ratio:3/2;display:grid;grid-template-columns:1fr 1fr;background:#dde4ed;overflow:hidden;transform:rotate(3deg);cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
 .mag-spread:focus-visible{box-shadow:0 0 0 3px var(--laranja),0 24px 48px -20px rgba(16,51,117,.45)}
-.mag-spread .base-l{grid-column:1}.mag-spread .base-r{grid-column:2}
+.mag-spread .base-l,.mag-spread .base-r{position:absolute;top:0;bottom:0;width:50%}.mag-spread .base-l{left:0}.mag-spread .base-r{left:50%}
 .mag-spread .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0deg);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1);visibility:hidden}
 .mag-spread .leaf.vis{visibility:visible}
+.mag-spread .leaf:not(.vis){display:none}
+.mag-spread .base-r.off,.mag-spread .base-l.off{visibility:hidden}
 .mag-spread .leaf.rest:not(.flip){transform:none}
 .mag-spread .leaf.rest:not(.flip) .face-b,.mag-spread .leaf.rest.flip .face-f{visibility:hidden}
 .mag-spread .leaf.flip{transform:perspective(1400px) rotateY(-180deg)}
@@ -1642,7 +1644,10 @@ svg[data-pk].walking{animation:none}
     var sp = document.querySelector('.mag-spread'); if (!sp) return;
     var leaves = [].slice.call(sp.querySelectorAll('.leaf')), n = 0, busy = 0;
     /* só as folhas vizinhas ficam visíveis; em repouso sem 3D (evita vazamentos no Safari) */
-    function vis(wide){ leaves.forEach(function(l, i){ l.classList.toggle('vis', wide ? (i >= n - 2 && i <= n) : (i >= n - 1 && i <= n)); }); }
+    var bl = sp.querySelector('.base-l'), br = sp.querySelector('.base-r');
+    function vis(wide){ leaves.forEach(function(l, i){ l.classList.toggle('vis', wide ? (i >= n - 2 && i <= n) : (i >= n - 1 && i <= n)); });
+      /* as páginas-base só aparecem quando não há folha por cima */
+      bl.classList.toggle('off', !wide && n > 0); br.classList.toggle('off', !wide && n < leaves.length); }
     function z(){ leaves.forEach(function(l, i){ l.style.zIndex = l.classList.contains('flip') ? 20 + i : 10 - i; l.classList.add('rest'); }); vis(); }
     function go(dir){
       var l;
