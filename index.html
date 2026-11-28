@@ -1053,6 +1053,10 @@ svg[data-pk].walking{animation:none}
 .parc-walk .pk{width:120px;margin:0}
 .parc h3,.parc-note{padding-right:0 !important}
 @media (min-width:1024px){.parc-walk .pk{width:160px}}
+
+/* Cervejarias: sem efeito de cobrir; aviso a 80px da próxima seção */
+#cervejarias{position:relative !important;top:auto !important;padding-bottom:calc(106px + var(--radius-sec)) !important}
+@media (min-width:768px){#cervejarias{padding-bottom:calc(118px + var(--radius-sec)) !important}}
 </style>
 </head>
 <body>
@@ -1768,9 +1772,8 @@ svg[data-pk].walking{animation:none}
       });
       var top = hh() + 16 + (n - 1) * PEEK;
       var rest = sec.getBoundingClientRect().bottom - ul.getBoundingClientRect().bottom;
-      /* só o mínimo para a pilha fechar antes de a seção seguinte cobrir */
-      var vh = window.innerHeight;
-      var v = Math.max(0, Math.ceil(vh - top - hl - rest + 8)) + 'px';
+      /* a seção não fica presa (sem efeito de cobrir), então a pilha fecha sozinha e não precisa de espaço extra */
+      var v = '0px';
       sec.style.setProperty('--pc-end', v);
       var changed = prev && prev !== v; prev = v;
       if (changed) window.dispatchEvent(new Event('resize'));
