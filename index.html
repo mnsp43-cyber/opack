@@ -1768,8 +1768,9 @@ svg[data-pk].walking{animation:none}
       });
       var top = hh() + 16 + (n - 1) * PEEK;
       var rest = sec.getBoundingClientRect().bottom - ul.getBoundingClientRect().bottom;
-      var vh = Math.max(window.innerHeight, document.documentElement.clientHeight, (window.screen && screen.height) || 0);
-      var v = Math.max(0, Math.ceil(vh - top - hl - rest + 96)) + 'px';
+      /* só o mínimo para a pilha fechar antes de a seção seguinte cobrir */
+      var vh = window.innerHeight;
+      var v = Math.max(0, Math.ceil(vh - top - hl - rest + 8)) + 'px';
       sec.style.setProperty('--pc-end', v);
       var changed = prev && prev !== v; prev = v;
       if (changed) window.dispatchEvent(new Event('resize'));
