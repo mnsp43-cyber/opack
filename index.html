@@ -902,8 +902,8 @@ svg[data-pk].walking{animation:none}
 /* Revista: 8 páginas que viram com toque (direita avança, esquerda volta) */
 .mag-spread{position:relative;width:min(420px,88vw);aspect-ratio:3/2;display:grid;grid-template-columns:1fr 1fr;background:#dde4ed;overflow:hidden;transform:rotate(3deg);cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
 .mag-spread:focus-visible{box-shadow:0 0 0 3px var(--laranja),0 24px 48px -20px rgba(16,51,117,.45)}
-.mag-spread .base-l,.mag-spread .base-r{position:absolute;top:0;bottom:0;width:50%}.mag-spread .base-l{left:0}.mag-spread .base-r{left:50%}
-.mag-spread .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0deg);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1);visibility:hidden}
+.mag-spread .base-l,.mag-spread .base-r{position:absolute;top:0;bottom:0;width:calc(50% + 1px)}.mag-spread .base-l{left:0}.mag-spread .base-r{left:calc(50% - 1px)}
+.mag-spread .leaf{position:absolute;top:0;left:calc(50% - 1px);width:calc(50% + 1px);height:100%;transform-origin:0 50%;transform:perspective(1400px) rotateY(0deg);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.45,.05,.25,1);visibility:hidden}
 .mag-spread .leaf.vis{visibility:visible}
 .mag-spread .leaf:not(.vis){display:none}
 .mag-spread .base-r.off,.mag-spread .base-l.off{visibility:hidden}
@@ -1014,7 +1014,7 @@ svg[data-pk].walking{animation:none}
 
 /* Revista: lombada no meio (vinco + sombra) para separar as páginas */
 .mag-spread::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:48px;margin-left:-24px;z-index:60;pointer-events:none;
-  background:linear-gradient(90deg,rgba(16,51,117,0) 0%,rgba(16,51,117,.08) 30%,rgba(16,51,117,.22) 48%,rgba(255,255,255,.22) 50%,rgba(16,51,117,.2) 52%,rgba(16,51,117,.07) 70%,rgba(16,51,117,0) 100%);mix-blend-mode:multiply}
+  background:linear-gradient(90deg,rgba(16,51,117,0) 0%,rgba(16,51,117,.08) 30%,rgba(16,51,117,.22) 48%,rgba(16,51,117,.26) 50%,rgba(16,51,117,.2) 52%,rgba(16,51,117,.07) 70%,rgba(16,51,117,0) 100%);mix-blend-mode:multiply}
 .mag-spread::before{content:'';position:absolute;inset:0;z-index:59;pointer-events:none;
   background:linear-gradient(90deg,rgba(255,255,255,.06) 0%,rgba(0,0,0,0) 8%,rgba(0,0,0,0) 92%,rgba(255,255,255,.06) 100%)}
 
