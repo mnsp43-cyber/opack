@@ -820,7 +820,8 @@ svg[data-pk].walking{animation:none}
 .parc ul li b{font-size:1.25rem;font-weight:900;font-stretch:125%;line-height:1.2;color:var(--laranja)}
 .parc ul li div > span{margin-top:8px;font-size:.75rem;color:var(--azul-escuro);opacity:.85}
 .parc ul li .parc-desc{margin-top:8px;font-size:1rem;line-height:1.5;font-weight:400;color:var(--azul-escuro)}
-.parc ul::after{content:'';height:var(--pc-end,0px);margin-top:-16px}
+.parc ul::after{display:none}
+.parc-note{margin-bottom:var(--pc-end,0px)}
 
 /* Grade de 8px: ajustes finos de espaçamento */
 .btn{padding:8px 24px;gap:8px}
@@ -1755,7 +1756,7 @@ svg[data-pk].walking{animation:none}
     var PEEK = 48, prev = '';
     function hh(){ return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 68; }
     function fit(){
-      ul.style.setProperty('--pc-end', '0px');
+      sec.style.setProperty('--pc-end', '0px');
       lis.forEach(function(li){ li.style.marginBottom = ''; li.style.marginTop = ''; });
       if (window.matchMedia('(min-width:900px)').matches) return;
       var n = lis.length, hs = lis.map(function(li){ return li.offsetHeight; }), hl = hs[n - 1];
@@ -1769,7 +1770,7 @@ svg[data-pk].walking{animation:none}
       var rest = sec.getBoundingClientRect().bottom - ul.getBoundingClientRect().bottom;
       var vh = Math.max(window.innerHeight, document.documentElement.clientHeight, (window.screen && screen.height) || 0);
       var v = Math.max(0, Math.ceil(vh - top - hl - rest + 96)) + 'px';
-      ul.style.setProperty('--pc-end', v);
+      sec.style.setProperty('--pc-end', v);
       var changed = prev && prev !== v; prev = v;
       if (changed) window.dispatchEvent(new Event('resize'));
     }
